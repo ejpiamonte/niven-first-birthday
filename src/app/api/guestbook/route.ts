@@ -1,0 +1,143 @@
+import { NextRequest, NextResponse } from "next/server";
+import getSupabaseAdmin from "@/src/lib/supabase";
+
+// Public: list only approved messages, newest last.
+export async function GET() {
+  try {
+    const supabase = getSupabaseAdmin();
+
+    const { data, error } = await supabase
+      .from("guestbook")
+      .select("id, name, message, created_at")
+      .eq("approved", true)
+      .order("created_at", { ascending: true });
+
+    if (error) {
+      console.error("Supabase guestbook select error:", error);
+      return NextResponse.json({ error: "Could not load messages." }, { status: 500 });
+    }
+
+    return NextResponse.json({ messages: data ?? [] });
+  } catch (error) {
+    console.error("Guestbook GET route error:", error);
+    return NextResponse.json({ error: "Could not load messages." }, { status: 500 });
+  }
+}
+
+// Create a new guestbook entry. Starts unapproved (pending moderation).
+export async function POST(request: NextRequest) {
+  let body: unknown;
+
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+  }
+
+  const { name, message } = body as { name?: string; message?: string };
+
+  if (!name || !name.trim() || !message || !message.trim()) {
+    return NextResponse.json(
+      { error: "Name and message are required." },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const supabase = getSupabaseAdmin();
+
+    const { data, error } = await supabase
+      .from("guestbook")
+      .insert({
+        name: name.trim().slice(0, 80),
+        message: message.trim().slice(0, 500),
+        approved: false,
+      })
+      .select("id, edit_token")
+      .single();
+
+    if (error || !data) {
+      console.error("Supabase guestbook insert error:", error);
+      return NextResponse.json(
+        { error: "Something went wrong saving your message." },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { id: data.id, editToken: data.edit_token },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Guestbook POST route error:", error);
+    return NextResponse.json(
+      { error: "Something went wrong saving your message." },
+      { status: 500 }
+    );
+  }
+}
+
+// Edit an existing entry. Requires the private edit token issued at creation.
+// Editing sends the message back into moderation (approved -> false).
+export async function PATCH(request: NextRequest) {
+  let body: unknown;
+
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+  }
+
+  const { id, editToken, name, message } = body as {
+    id?: string;
+    editToken?: string;
+    name?: string;
+    message?: string;
+  };
+
+  if (!id || !editToken || !name?.trim() || !message?.trim()) {
+    return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
+  }
+
+  try {
+    const supabase = getSupabaseAdmin();
+
+    const { data: existing, error: fetchError } = await supabase
+      .from("guestbook")
+      .select("id, edit_token")
+      .eq("id", id)
+      .single();
+
+    if (fetchError || !existing || existing.edit_token !== editToken) {
+      return NextResponse.json(
+        { error: "We couldn't verify you own this message." },
+        { status: 403 }
+      );
+    }
+
+    const { error: updateError } = await supabase
+      .from("guestbook")
+      .update({
+        name: name.trim().slice(0, 80),
+        message: message.trim().slice(0, 500),
+        approved: false,
+      })
+      .eq("id", id);
+
+    if (updateError) {
+      console.error("Supabase guestbook update error:", updateError);
+      return NextResponse.json(
+        { error: "Something went wrong updating your message." },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Guestbook PATCH route error:", error);
+    return NextResponse.json(
+      { error: "Something went wrong updating your message." },
+      { status: 500 }
+    );
+  }
+}

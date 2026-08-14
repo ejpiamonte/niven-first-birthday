@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+:root {
+  --royal-blue: #071a3d;
+  --royal-blue-light: #0d2b5c;
+  --gold: #d8b76a;
+  --gold-light: #f0d99a;
+  --ivory: #faf7f0;
+  --text-dark: #172033;
+  --text-muted: #667085;
+
+  /* Subtle mint green accent — used sparingly against the blue/gold palette */
+  --mint: #3fa787;
+  --mint-light: #8fd9b6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--royal-blue);
+  color: var(--ivory);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--royal-blue);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------
+   Gold decorative elements
+-------------------------------- */
+
+.gold-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold),
+    transparent
+  );
+}
+
+.gold-border {
+  border: 1px solid rgba(216, 183, 106, 0.45);
+}
+
+/* --------------------------------
+   Sparkle gradient accents
+-------------------------------- */
+
+.sparkle-gradient {
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(216, 183, 106, 0.25),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(63, 167, 135, 0.18),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(216, 183, 106, 0.14),
+      transparent 50%
+    );
+}
+
+.mint-glow {
+  box-shadow: 0 0 24px rgba(63, 167, 135, 0.25);
+}
+
+/* --------------------------------
+   Subtle star animation
+-------------------------------- */
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.star {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.star-delay-1 {
+  animation-delay: 0.8s;
+}
+
+.star-delay-2 {
+  animation-delay: 1.6s;
+}
+
+.star-delay-3 {
+  animation-delay: 2.2s;
+}
+
+.star-mint {
+  color: var(--mint-light);
+}
+
+/* --------------------------------
+   Mobile-first container
+-------------------------------- */
+
+.invitation-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
