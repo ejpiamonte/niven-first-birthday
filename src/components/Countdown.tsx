@@ -89,24 +89,40 @@ export default function Countdown() {
         Counting Down
       </p>
 
-      <div className="mx-auto grid max-w-[420px] grid-cols-2 gap-x-8 gap-y-3 px-4 text-center font-serif text-lg font-semibold text-[#071A3D] sm:text-xl">
-        {[
-          { value: timeLeft.days, label: "Days" },
-          { value: timeLeft.hours, label: "Hours" },
-          { value: timeLeft.minutes, label: "Minutes" },
-          { value: timeLeft.seconds, label: "Seconds" },
-        ].map((item) => (
-          <span
-            key={item.label}
-            className="flex items-baseline justify-center gap-2"
-          >
-            <span>{padNumber(item.value)}</span>
-
-            <span className="font-sans text-[10px] font-normal uppercase tracking-[0.1em] text-[#A08445] sm:text-sm">
-              {item.label}
+      <div className="flex flex-col items-center gap-2 px-2 text-center font-serif text-[15px] font-semibold text-[#071A3D] sm:text-xl">
+        <div className="flex items-baseline justify-center gap-1.5 sm:gap-2">
+          {[
+            { value: timeLeft.days, label: "Days" },
+            { value: timeLeft.hours, label: "Hours" },
+          ].map((item, index) => (
+            <span key={item.label} className="flex items-baseline gap-1.5">
+              {index > 0 && (
+                <span className="mr-0.5 text-[#3FA787] sm:mr-1">·</span>
+              )}
+              <span>{padNumber(item.value)}</span>
+              <span className="font-sans text-[10px] font-normal uppercase tracking-[0.1em] text-[#A08445] sm:text-sm">
+                {item.label}
+              </span>
             </span>
-          </span>
-        ))}
+          ))}
+        </div>
+
+        <div className="flex items-baseline justify-center gap-1.5 sm:gap-2">
+          {[
+            { value: timeLeft.minutes, label: "Minutes" },
+            { value: timeLeft.seconds, label: "Seconds" },
+          ].map((item, index) => (
+            <span key={item.label} className="flex items-baseline gap-1.5">
+              {index > 0 && (
+                <span className="mr-0.5 text-[#3FA787] sm:mr-1">·</span>
+              )}
+              <span>{padNumber(item.value)}</span>
+              <span className="font-sans text-[10px] font-normal uppercase tracking-[0.1em] text-[#A08445] sm:text-sm">
+                {item.label}
+              </span>
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
