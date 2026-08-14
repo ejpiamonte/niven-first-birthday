@@ -70,7 +70,7 @@ export default function Invitation() {
                 transition={{ duration: 1 }}
                 className="text-xs uppercase tracking-[0.4em] text-[#D8B76A]"
               >
-                A Special Invitations
+                A Special Invitation
               </motion.p>
 
               <motion.div
