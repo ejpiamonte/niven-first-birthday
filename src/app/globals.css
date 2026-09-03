@@ -1,44 +1,51 @@
 @import "tailwindcss";
 
 :root {
-  /* Rodeo / cowboy palette */
-  --rodeo-espresso: #2b1810;   /* deep brown — main dark background */
-  --rodeo-saddle: #4a2e1c;     /* lighter brown — secondary dark surfaces */
-  --rodeo-black-brown: #1a0f09; /* near-black brown — footer/darkest sections */
-  --rodeo-gold: #c9973b;       /* mustard leather gold — primary accent */
-  --rodeo-gold-light: #e8c87a; /* light gold — highlights */
-  --rodeo-cream: #f5ede0;      /* warm cream — light section background */
-  --rodeo-text-dark: #2e1d12;  /* dark brown text on cream */
-  --rodeo-text-muted: #7a6552; /* warm taupe muted text */
-  --rodeo-label: #8b5e34;      /* leather-brown label color on cream */
-  --rodeo-rust: #b5651d;       /* rust/terracotta accent (replaces mint) */
-  --rodeo-rust-light: #d98c4a; /* light rust */
+  --navy: #102A43;
+  --blue: #163A5F;
+  --cream: #F7F0DF;
+  --gold: #D4AF5A;
+  --brown: #8B5E3C;
+  --sage: #87966B;
+  --ink: #17324A;
+  --muted: #66788A;
+  --paper-deep: #EDE1C5;
+  --night: #0B2035;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
-  background: var(--rodeo-espresso);
-  color: var(--rodeo-cream);
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  min-width: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(212,175,90,.08), transparent 25%),
+    var(--cream);
+  color: var(--ink);
+  font-family: var(--font-inter), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-h1,
-h2,
-h3,
-h4 {
+h1,h2,h3,h4 {
   font-family: var(--font-playfair), Georgia, serif;
+  letter-spacing: -.02em;
 }
 
 button,
-a {
+a,
+input,
+textarea {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -47,120 +54,302 @@ button {
 }
 
 ::selection {
-  background: var(--rodeo-gold);
-  color: var(--rodeo-espresso);
+  background: var(--gold);
+  color: var(--navy);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+/* Parchment texture */
+.story-paper {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(139,94,60,.07) 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 65%, rgba(139,94,60,.055) 0 1px, transparent 2px),
+    linear-gradient(135deg, rgba(255,255,255,.42), transparent 40%),
+    var(--cream);
+  background-size: 23px 23px, 31px 31px, auto, auto;
 }
 
-/* --------------------------------
-   Gold decorative elements
--------------------------------- */
+.story-paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .3;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(139,94,60,.018) 4px),
+    repeating-linear-gradient(90deg, transparent 0 5px, rgba(139,94,60,.014) 6px);
+  z-index: -1;
+}
 
-.gold-line {
+/* Fine rope / western border */
+.rope-border {
+  border: 1px solid rgba(139,94,60,.55);
+  box-shadow:
+    inset 0 0 0 3px rgba(247,240,223,.9),
+    inset 0 0 0 4px rgba(139,94,60,.22);
+  border-radius: 18px;
+}
+
+/* Gold ornament */
+.gold-rule {
   height: 1px;
+  width: min(180px, 70%);
+  margin-inline: auto;
   background: linear-gradient(
     90deg,
     transparent,
-    var(--rodeo-gold),
+    var(--gold),
     transparent
   );
 }
 
-.gold-border {
-  border: 1px solid rgba(201, 151, 59, 0.45);
+.gold-rule::before {
+  content: "✦";
+  display: block;
+  width: 24px;
+  margin: -12px auto 0;
+  background: var(--cream);
+  color: var(--gold);
+  text-align: center;
+  font-size: 12px;
 }
 
-/* --------------------------------
-   Sparkle gradient accents
--------------------------------- */
-
-.sparkle-gradient {
-  background: radial-gradient(
-      circle at 20% 20%,
-      rgba(201, 151, 59, 0.25),
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 80% 10%,
-      rgba(181, 101, 29, 0.18),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 50% 90%,
-      rgba(201, 151, 59, 0.14),
-      transparent 50%
-    );
+/* Night-sky hero */
+.story-night {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 76% 17%, rgba(255,255,255,.12), transparent 2px),
+    radial-gradient(circle at 23% 26%, rgba(212,175,90,.16), transparent 1px),
+    linear-gradient(180deg, #0B2035 0%, #102A43 58%, #163A5F 100%);
 }
 
-.rust-glow {
-  box-shadow: 0 0 24px rgba(181, 101, 29, 0.25);
+.story-night::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .7;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(212,175,90,.8) 0 1px, transparent 1.7px);
+  background-size: 83px 71px, 121px 103px;
+  background-position: 10px 14px, 42px 37px;
+  pointer-events: none;
 }
 
-/* --------------------------------
-   Subtle star animation
--------------------------------- */
-
-@keyframes twinkle {
-  0%,
-  100% {
-    opacity: 0.25;
-    transform: scale(0.8);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
+.story-moon {
+  position: absolute;
+  top: 7%;
+  right: 9%;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #FFF8DE;
+  box-shadow: 0 0 40px rgba(255,248,222,.22);
 }
 
-.star {
-  animation: twinkle 3s ease-in-out infinite;
+.story-moon::after {
+  content: "";
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  left: 15px;
+  top: -5px;
+  border-radius: 50%;
+  background: #0E2943;
 }
 
-.star-delay-1 {
-  animation-delay: 0.8s;
+.story-stars {
+  animation: star-drift 7s ease-in-out infinite alternate;
 }
 
-.star-delay-2 {
-  animation-delay: 1.6s;
+@keyframes star-drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
 }
 
-.star-delay-3 {
-  animation-delay: 2.2s;
+.story-mountains {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: 0;
+  height: 32%;
+  background:
+    linear-gradient(145deg, transparent 0 39%, #0A1C2D 40% 58%, transparent 59%) 0 35% / 46% 90% no-repeat,
+    linear-gradient(35deg, transparent 0 39%, #0A1C2D 40% 61%, transparent 62%) 36% 25% / 55% 100% no-repeat,
+    linear-gradient(160deg, transparent 0 42%, #091A2B 43% 63%, transparent 64%) 70% 25% / 44% 100% no-repeat;
+  pointer-events: none;
 }
 
-.star-rust {
-  color: var(--rodeo-rust-light);
+.story-ground {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: -1px;
+  height: 18%;
+  background: #0A1C2D;
+  clip-path: polygon(0 42%, 14% 31%, 29% 45%, 42% 25%, 57% 44%, 70% 28%, 84% 43%, 100% 31%, 100% 100%, 0 100%);
 }
 
-/* --------------------------------
-   Round photo frame (rope-style ring)
--------------------------------- */
-
-.photo-frame {
-  border: 4px solid var(--rodeo-gold);
+/* Reusable cards */
+.story-card {
+  background: var(--cream);
+  color: var(--ink);
+  border: 1px solid rgba(212,175,90,.72);
   box-shadow:
-    0 0 0 4px var(--rodeo-espresso),
-    0 0 0 6px rgba(201, 151, 59, 0.4),
-    0 10px 30px rgba(0, 0, 0, 0.45);
+    0 18px 50px rgba(16,42,67,.14),
+    inset 0 0 0 4px rgba(139,94,60,.07);
 }
 
-/* --------------------------------
-   Mobile-first container
--------------------------------- */
+.story-card-dark {
+  background: linear-gradient(145deg, #163A5F, #102A43);
+  color: var(--cream);
+  border: 1px solid rgba(212,175,90,.55);
+  box-shadow: 0 20px 55px rgba(6,19,31,.28);
+}
 
-.invitation-container {
+/* Countdown: 2x2 everywhere */
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
   width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
+}
+
+.countdown-card {
+  min-width: 0;
+  border: 1px solid rgba(212,175,90,.7);
+  border-radius: 14px;
+  padding: 16px 8px;
+  text-align: center;
+  background:
+    linear-gradient(rgba(255,255,255,.2), transparent),
+    var(--cream);
+  box-shadow:
+    0 8px 22px rgba(16,42,67,.1),
+    inset 0 0 0 3px rgba(139,94,60,.055);
+}
+
+.countdown-number {
+  color: var(--navy);
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(1.8rem, 7vw, 2.5rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-label {
+  margin-top: 7px;
+  color: var(--brown);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+/* Baby photo */
+.story-photo {
+  border: 6px solid var(--cream);
+  outline: 1px solid rgba(212,175,90,.85);
+  box-shadow: 0 20px 55px rgba(4,15,25,.28);
+}
+
+/* Handwritten accent */
+.script-accent {
+  font-family: "Segoe Print", "Bradley Hand", cursive;
+  color: var(--brown);
+  letter-spacing: .01em;
+}
+
+/* Buttons */
+.story-button {
+  min-height: 52px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  padding: 14px 24px;
+  background: var(--navy);
+  color: var(--cream);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 20px rgba(16,42,67,.18);
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.story-button:hover {
+  background: var(--blue);
+  box-shadow: 0 12px 28px rgba(16,42,67,.22);
+}
+
+.story-button:active {
+  transform: scale(.98);
+}
+
+.story-button-gold {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* Inputs */
+.story-input {
+  width: 100%;
+  border: 1px solid rgba(139,94,60,.38);
+  border-radius: 12px;
+  background: rgba(255,255,255,.58);
+  color: var(--ink);
+  padding: 14px 15px;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.story-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212,175,90,.14);
+}
+
+/* Music ornament */
+.music-orbit {
+  border: 1px solid rgba(212,175,90,.7);
+  background: rgba(16,42,67,.92);
+  color: var(--gold);
+  box-shadow: 0 10px 28px rgba(5,18,30,.22);
+  backdrop-filter: blur(8px);
+}
+
+/* No-motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Small screens: protect against overflow */
+@media (max-width: 480px) {
+  .story-moon {
+    width: 58px;
+    height: 58px;
+    right: 7%;
+  }
+
+  .story-moon::after {
+    width: 55px;
+    height: 55px;
+    left: 12px;
+    top: -4px;
+  }
+
+  .countdown-grid {
+    gap: 8px;
+  }
+
+  .countdown-card {
+    padding: 14px 6px;
+  }
 }
