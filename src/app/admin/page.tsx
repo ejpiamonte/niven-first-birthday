@@ -44,7 +44,8 @@ export default function AdminPage() {
 
       if (!response.ok) {
         setAuthorized(false);
-        setError("Incorrect password.");
+        const body = await response.json().catch(() => null);
+        setError(body?.error || "Incorrect password.");
         window.sessionStorage.removeItem(STORAGE_KEY);
         return;
       }
@@ -79,15 +80,15 @@ export default function AdminPage() {
 
   if (!authorized) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#071A3D] px-6">
+      <main className="flex min-h-screen items-center justify-center bg-[#2B1810] px-6">
         <form
           onSubmit={(event) => {
             event.preventDefault();
             void loadData(password);
           }}
-          className="w-full max-w-sm rounded-2xl border border-[#D8B76A]/30 bg-white/[0.04] p-8"
+          className="w-full max-w-sm rounded-2xl border border-[#C9973B]/30 bg-white/[0.04] p-8"
         >
-          <h1 className="font-serif text-2xl text-[#FAF7F0]">Admin</h1>
+          <h1 className="font-serif text-2xl text-[#F5EDE0]">Admin</h1>
 
           <p className="mt-2 text-sm text-white/60">
             Enter the admin password to moderate the guestbook. RSVP totals
@@ -99,13 +100,13 @@ export default function AdminPage() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             placeholder="Password"
-            className="mt-6 w-full rounded-xl border border-[#D8B76A]/40 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#D8B76A]"
+            className="mt-6 w-full rounded-xl border border-[#C9973B]/40 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#C9973B]"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 w-full rounded-full bg-[#D8B76A] px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#071A3D] transition hover:bg-[#F0D99A] disabled:opacity-50"
+            className="mt-4 w-full rounded-full bg-[#C9973B] px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#2B1810] transition hover:bg-[#E8C87A] disabled:opacity-50"
           >
             {loading ? "Checking..." : "Enter"}
           </button>
@@ -120,9 +121,9 @@ export default function AdminPage() {
   const approved = data?.guestbook.filter((row) => row.approved) ?? [];
 
   return (
-    <main className="min-h-screen bg-[#071A3D] px-6 py-16 text-white">
+    <main className="min-h-screen bg-[#2B1810] px-6 py-16 text-white">
       <div className="mx-auto max-w-3xl">
-        <h1 className="font-serif text-3xl text-[#FAF7F0]">Azarius&apos;s Birthday — Admin</h1>
+        <h1 className="font-serif text-3xl text-[#F5EDE0]">Azarius&apos;s Birthday — Admin</h1>
 
         <p className="mt-2 text-sm text-white/50">
           Looking for RSVP totals? Open your Google Form&apos;s Responses tab
@@ -131,7 +132,7 @@ export default function AdminPage() {
 
         {data && (
           <>
-            <h2 className="mt-10 font-serif text-xl text-[#FAF7F0]">
+            <h2 className="mt-10 font-serif text-xl text-[#F5EDE0]">
               Pending Guestbook Messages ({pending.length})
             </h2>
 
@@ -143,15 +144,15 @@ export default function AdminPage() {
               {pending.map((row) => (
                 <div
                   key={row.id}
-                  className="rounded-lg border border-[#D8B76A]/30 bg-white/[0.03] px-4 py-3 text-sm"
+                  className="rounded-lg border border-[#C9973B]/30 bg-white/[0.03] px-4 py-3 text-sm"
                 >
-                  <p className="font-medium text-[#F0D99A]">{row.name}</p>
+                  <p className="font-medium text-[#E8C87A]">{row.name}</p>
                   <p className="mt-1 text-white/70">{row.message}</p>
 
                   <div className="mt-3 flex gap-3">
                     <button
                       onClick={() => void moderate(row.id, "approve")}
-                      className="rounded-full bg-[#8FD9B6] px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#071A3D]"
+                      className="rounded-full bg-[#D98C4A] px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#2B1810]"
                     >
                       Approve
                     </button>
@@ -167,7 +168,7 @@ export default function AdminPage() {
               ))}
             </div>
 
-            <h2 className="mt-12 font-serif text-xl text-[#FAF7F0]">
+            <h2 className="mt-12 font-serif text-xl text-[#F5EDE0]">
               Published Guestbook Messages ({approved.length})
             </h2>
 

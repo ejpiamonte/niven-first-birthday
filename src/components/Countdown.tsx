@@ -72,11 +72,11 @@ export default function Countdown() {
   if (isEventDay) {
     return (
       <div className="mt-10 text-center">
-        <p className="font-serif text-3xl text-[#071A3D]">
+        <p className="font-serif text-3xl text-[#2E1D12]">
           🎉 Today is the day!
         </p>
 
-        <p className="mt-2 text-sm text-[#667085]">
+        <p className="mt-2 text-sm text-[#7A6552]">
           We can&apos;t wait to celebrate with you.
         </p>
       </div>
@@ -85,11 +85,11 @@ export default function Countdown() {
 
   return (
     <div className="mt-10">
-      <p className="mb-4 text-center text-xs uppercase tracking-[0.3em] text-[#A08445]">
+      <p className="mb-4 text-center text-xs uppercase tracking-[0.3em] text-[#8B5E34]">
         Counting Down
       </p>
 
-      <div className="flex flex-col items-center gap-2 px-2 text-center font-serif text-[15px] font-semibold text-[#071A3D] sm:text-xl">
+      <div className="flex flex-col items-center gap-2 px-2 text-center font-serif text-[15px] font-semibold text-[#2E1D12] sm:text-xl">
         <div className="flex items-baseline justify-center gap-1.5 sm:gap-2">
           {[
             { value: timeLeft.days, label: "Days" },
@@ -97,10 +97,10 @@ export default function Countdown() {
           ].map((item, index) => (
             <span key={item.label} className="flex items-baseline gap-1.5">
               {index > 0 && (
-                <span className="mr-0.5 text-[#3FA787] sm:mr-1">·</span>
+                <span className="mr-0.5 text-[#B5651D] sm:mr-1">·</span>
               )}
               <span>{padNumber(item.value)}</span>
-              <span className="font-sans text-[10px] font-normal uppercase tracking-[0.1em] text-[#A08445] sm:text-sm">
+              <span className="font-sans text-[10px] font-normal uppercase tracking-[0.1em] text-[#8B5E34] sm:text-sm">
                 {item.label}
               </span>
             </span>
@@ -114,10 +114,10 @@ export default function Countdown() {
           ].map((item, index) => (
             <span key={item.label} className="flex items-baseline gap-1.5">
               {index > 0 && (
-                <span className="mr-0.5 text-[#3FA787] sm:mr-1">·</span>
+                <span className="mr-0.5 text-[#B5651D] sm:mr-1">·</span>
               )}
               <span>{padNumber(item.value)}</span>
-              <span className="font-sans text-[10px] font-normal uppercase tracking-[0.1em] text-[#A08445] sm:text-sm">
+              <span className="font-sans text-[10px] font-normal uppercase tracking-[0.1em] text-[#8B5E34] sm:text-sm">
                 {item.label}
               </span>
             </span>

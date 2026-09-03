@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --royal-blue: #071a3d;
-  --royal-blue-light: #0d2b5c;
-  --gold: #d8b76a;
-  --gold-light: #f0d99a;
-  --ivory: #faf7f0;
-  --text-dark: #172033;
-  --text-muted: #667085;
-
-  /* Subtle mint green accent — used sparingly against the blue/gold palette */
-  --mint: #3fa787;
-  --mint-light: #8fd9b6;
+  /* Rodeo / cowboy palette */
+  --rodeo-espresso: #2b1810;   /* deep brown — main dark background */
+  --rodeo-saddle: #4a2e1c;     /* lighter brown — secondary dark surfaces */
+  --rodeo-black-brown: #1a0f09; /* near-black brown — footer/darkest sections */
+  --rodeo-gold: #c9973b;       /* mustard leather gold — primary accent */
+  --rodeo-gold-light: #e8c87a; /* light gold — highlights */
+  --rodeo-cream: #f5ede0;      /* warm cream — light section background */
+  --rodeo-text-dark: #2e1d12;  /* dark brown text on cream */
+  --rodeo-text-muted: #7a6552; /* warm taupe muted text */
+  --rodeo-label: #8b5e34;      /* leather-brown label color on cream */
+  --rodeo-rust: #b5651d;       /* rust/terracotta accent (replaces mint) */
+  --rodeo-rust-light: #d98c4a; /* light rust */
 }
 
 * {
@@ -24,8 +25,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--royal-blue);
-  color: var(--ivory);
+  background: var(--rodeo-espresso);
+  color: var(--rodeo-cream);
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
 }
 
@@ -46,8 +47,8 @@ button {
 }
 
 ::selection {
-  background: var(--gold);
-  color: var(--royal-blue);
+  background: var(--rodeo-gold);
+  color: var(--rodeo-espresso);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -70,13 +71,13 @@ button {
   background: linear-gradient(
     90deg,
     transparent,
-    var(--gold),
+    var(--rodeo-gold),
     transparent
   );
 }
 
 .gold-border {
-  border: 1px solid rgba(216, 183, 106, 0.45);
+  border: 1px solid rgba(201, 151, 59, 0.45);
 }
 
 /* --------------------------------
@@ -86,23 +87,23 @@ button {
 .sparkle-gradient {
   background: radial-gradient(
       circle at 20% 20%,
-      rgba(216, 183, 106, 0.25),
+      rgba(201, 151, 59, 0.25),
       transparent 45%
     ),
     radial-gradient(
       circle at 80% 10%,
-      rgba(63, 167, 135, 0.18),
+      rgba(181, 101, 29, 0.18),
       transparent 40%
     ),
     radial-gradient(
       circle at 50% 90%,
-      rgba(216, 183, 106, 0.14),
+      rgba(201, 151, 59, 0.14),
       transparent 50%
     );
 }
 
-.mint-glow {
-  box-shadow: 0 0 24px rgba(63, 167, 135, 0.25);
+.rust-glow {
+  box-shadow: 0 0 24px rgba(181, 101, 29, 0.25);
 }
 
 /* --------------------------------
@@ -138,8 +139,20 @@ button {
   animation-delay: 2.2s;
 }
 
-.star-mint {
-  color: var(--mint-light);
+.star-rust {
+  color: var(--rodeo-rust-light);
+}
+
+/* --------------------------------
+   Round photo frame (rope-style ring)
+-------------------------------- */
+
+.photo-frame {
+  border: 4px solid var(--rodeo-gold);
+  box-shadow:
+    0 0 0 4px var(--rodeo-espresso),
+    0 0 0 6px rgba(201, 151, 59, 0.4),
+    0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
 /* --------------------------------

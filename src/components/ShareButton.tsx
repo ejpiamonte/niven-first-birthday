@@ -8,7 +8,7 @@ export default function ShareButton() {
   async function shareInvitation() {
     const shareData = {
       title: "Azarius's 1st Birthday",
-      text: "You're invited to celebrate Azarius Zayne's first birthday! 🎂",
+      text: "You're invited to celebrate Azarius Niven's first birthday! 🎂",
       url: window.location.href,
     };
 
@@ -38,7 +38,7 @@ export default function ShareButton() {
   return (
     <button
       onClick={shareInvitation}
-      className="w-full rounded-full bg-[#D8B76A] px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#071A3D] transition hover:bg-[#F0D99A]"
+      className="w-full rounded-full bg-[#C9973B] px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#2B1810] transition hover:bg-[#E8C87A]"
     >
       {copied ? "✓ Link Copied!" : "📤 Share Invitation"}
     </button>

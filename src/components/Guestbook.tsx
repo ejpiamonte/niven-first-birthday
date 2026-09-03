@@ -141,14 +141,14 @@ export default function Guestbook() {
   const showForm = !myEntry || isEditing;
 
   return (
-    <section className="bg-[#071A3D] px-6 py-20 text-white">
+    <section className="bg-[#2B1810] px-6 py-20 text-white">
       <div className="mx-auto max-w-md">
         <div className="text-center">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#D8B76A]">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#C9973B]">
             Leave Some Love
           </p>
 
-          <h2 className="mt-4 font-serif text-4xl text-[#FAF7F0]">
+          <h2 className="mt-4 font-serif text-4xl text-[#F5EDE0]">
             Guestbook
           </h2>
 
@@ -175,15 +175,15 @@ export default function Guestbook() {
           {messages.map((item) => (
             <div
               key={item.id}
-              className="rounded-2xl border border-[#D8B76A]/20 bg-white/[0.04] p-5"
+              className="rounded-2xl border border-[#C9973B]/20 bg-white/[0.04] p-5"
             >
-              <div className="text-[#D8B76A]">&ldquo;</div>
+              <div className="text-[#C9973B]">&ldquo;</div>
 
               <p className="mt-1 text-sm leading-7 text-white/80">
                 {item.message}
               </p>
 
-              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-[#F0D99A]">
+              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-[#E8C87A]">
                 — {item.name}
               </p>
             </div>
@@ -192,7 +192,7 @@ export default function Guestbook() {
 
         {/* My entry status */}
         {myEntry && !showForm && (
-          <div className="mt-10 rounded-2xl border border-[#8FD9B6]/30 bg-[#8FD9B6]/10 p-5 text-center">
+          <div className="mt-10 rounded-2xl border border-[#D98C4A]/30 bg-[#D98C4A]/10 p-5 text-center">
             <p className="text-sm text-white/80">
               You&apos;ve already left a message. It&apos;ll appear above once
               it&apos;s reviewed.
@@ -200,7 +200,7 @@ export default function Guestbook() {
 
             <button
               onClick={() => setIsEditing(true)}
-              className="mt-4 text-xs uppercase tracking-[0.2em] text-[#F0D99A] underline underline-offset-4"
+              className="mt-4 text-xs uppercase tracking-[0.2em] text-[#E8C87A] underline underline-offset-4"
             >
               Edit your message
             </button>
@@ -215,7 +215,7 @@ export default function Guestbook() {
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Your name"
-              className="w-full rounded-xl border border-[#D8B76A]/30 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#D8B76A]"
+              className="w-full rounded-xl border border-[#C9973B]/30 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#C9973B]"
               required
             />
 
@@ -224,14 +224,14 @@ export default function Guestbook() {
               onChange={(event) => setMessage(event.target.value)}
               placeholder="Write a birthday message..."
               rows={4}
-              className="w-full resize-none rounded-xl border border-[#D8B76A]/30 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#D8B76A]"
+              className="w-full resize-none rounded-xl border border-[#C9973B]/30 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#C9973B]"
               required
             />
 
             <button
               type="submit"
               disabled={submitting}
-              className="w-full rounded-full bg-[#D8B76A] px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#071A3D] transition hover:bg-[#F0D99A] disabled:opacity-50"
+              className="w-full rounded-full bg-[#C9973B] px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#2B1810] transition hover:bg-[#E8C87A] disabled:opacity-50"
             >
               {submitting
                 ? "Saving..."
@@ -257,7 +257,7 @@ export default function Guestbook() {
         )}
 
         {justSaved && (
-          <p className="mt-4 text-center text-xs text-[#F0D99A]">
+          <p className="mt-4 text-center text-xs text-[#E8C87A]">
             Your message has been saved and is awaiting review. ❤️
           </p>
         )}

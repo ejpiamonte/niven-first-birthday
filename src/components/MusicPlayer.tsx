@@ -44,7 +44,7 @@ export default function MusicPlayer() {
     <button
       onClick={toggleMusic}
       aria-label={playing ? "Pause music" : "Play music"}
-      className="fixed right-5 top-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-[#D8B76A]/50 bg-[#071A3D]/90 text-lg text-[#F0D99A] shadow-xl backdrop-blur"
+      className="fixed right-5 top-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-[#C9973B]/50 bg-[#2B1810]/90 text-lg text-[#E8C87A] shadow-xl backdrop-blur"
     >
       {playing ? "♫" : "🔇"}
     </button>

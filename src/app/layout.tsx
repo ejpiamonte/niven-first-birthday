@@ -22,17 +22,16 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Azarius Niven | First Birthday",
   description:
-    "You're invited to celebrate Azarius Niven's first birthday on October 4, 2026 at 11:30 AM, Shakey's Meycauayan.",
+    "You're invited to celebrate Azarius Niven's first birthday on October 4, 2026 at 11:30 AM, at our home.",
 
   openGraph: {
     title: "Azarius Niven | First Birthday",
     description:
-      "Join us as we celebrate Azarius Niven's first birthday — October 4, 2026, 11:30 AM at Shakey's Meycauayan.",
+      "Join us as we celebrate Azarius Niven's first birthday — October 4, 2026, 11:30 AM at our home.",
     type: "website",
     locale: "en_PH",
     siteName: "Azarius's 1st Birthday",
-    // Drop a 1200x630 image at /public/og-image.jpg to control how the
-    // invitation looks when shared in Messenger, Facebook, etc.
+    // Generated from your photo — see SETUP.md if you want to swap it.
     images: [
       {
         url: "/og-image.jpg",
