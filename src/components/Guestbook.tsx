@@ -141,14 +141,14 @@ export default function Guestbook() {
   const showForm = !myEntry || isEditing;
 
   return (
-    <section className="bg-[#2B1810] px-6 py-20 text-white">
+    <section className="bg-[var(--navy)] px-6 py-20 text-white">
       <div className="mx-auto max-w-md">
         <div className="text-center">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#C9973B]">
+          <p className="text-xs uppercase tracking-[0.35em] text-[var(--gold)]">
             Leave Some Love
           </p>
 
-          <h2 className="mt-4 font-serif text-4xl text-[#F5EDE0]">
+          <h2 className="mt-4 font-serif text-4xl text-[var(--cream)]">
             Guestbook
           </h2>
 
@@ -175,15 +175,15 @@ export default function Guestbook() {
           {messages.map((item) => (
             <div
               key={item.id}
-              className="rounded-2xl border border-[#C9973B]/20 bg-white/[0.04] p-5"
+              className="rounded-2xl border border-[var(--gold)]/20 bg-white/[0.04] p-5"
             >
-              <div className="text-[#C9973B]">&ldquo;</div>
+              <div className="text-[var(--gold)]">&ldquo;</div>
 
               <p className="mt-1 text-sm leading-7 text-white/80">
                 {item.message}
               </p>
 
-              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-[#E8C87A]">
+              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-[var(--dust)]">
                 — {item.name}
               </p>
             </div>
@@ -192,15 +192,14 @@ export default function Guestbook() {
 
         {/* My entry status */}
         {myEntry && !showForm && (
-          <div className="mt-10 rounded-2xl border border-[#D98C4A]/30 bg-[#D98C4A]/10 p-5 text-center">
+          <div className="mt-10 rounded-2xl border border-[var(--gold)]/30 bg-[var(--gold)]/10 p-5 text-center">
             <p className="text-sm text-white/80">
-              You&apos;ve already left a message. It&apos;ll appear above once
-              it&apos;s reviewed.
+              Your message is live above. You can edit it any time.
             </p>
 
             <button
               onClick={() => setIsEditing(true)}
-              className="mt-4 text-xs uppercase tracking-[0.2em] text-[#E8C87A] underline underline-offset-4"
+              className="mt-4 text-xs uppercase tracking-[0.2em] text-[var(--dust)] underline underline-offset-4"
             >
               Edit your message
             </button>
@@ -215,7 +214,7 @@ export default function Guestbook() {
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Your name"
-              className="w-full rounded-xl border border-[#C9973B]/30 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#C9973B]"
+              className="w-full rounded-xl border border-[var(--gold)]/30 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[var(--gold)]"
               required
             />
 
@@ -224,14 +223,14 @@ export default function Guestbook() {
               onChange={(event) => setMessage(event.target.value)}
               placeholder="Write a birthday message..."
               rows={4}
-              className="w-full resize-none rounded-xl border border-[#C9973B]/30 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[#C9973B]"
+              className="w-full resize-none rounded-xl border border-[var(--gold)]/30 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-[var(--gold)]"
               required
             />
 
             <button
               type="submit"
               disabled={submitting}
-              className="w-full rounded-full bg-[#C9973B] px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#2B1810] transition hover:bg-[#E8C87A] disabled:opacity-50"
+              className="w-full rounded-full bg-[var(--gold)] px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--navy)] transition hover:bg-[var(--dust)] disabled:opacity-50"
             >
               {submitting
                 ? "Saving..."
@@ -257,8 +256,8 @@ export default function Guestbook() {
         )}
 
         {justSaved && (
-          <p className="mt-4 text-center text-xs text-[#E8C87A]">
-            Your message has been saved and is awaiting review. ❤️
+          <p className="mt-4 text-center text-xs text-[var(--dust)]">
+            Your message is live! ❤️
           </p>
         )}
       </div>

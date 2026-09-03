@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import getSupabaseAdmin from "@/src/lib/supabase";
 
-// Public: list only approved messages, newest last.
+// Public: list live messages, newest last.
 export async function GET() {
   try {
     const supabase = getSupabaseAdmin();
@@ -24,7 +24,9 @@ export async function GET() {
   }
 }
 
-// Create a new guestbook entry. Starts unapproved (pending moderation).
+// Create a new guestbook entry. Goes live immediately — no moderation
+// queue. The admin dashboard keeps the ability to remove a message
+// after the fact as a safety net (see app/api/admin/moderate).
 export async function POST(request: NextRequest) {
   let body: unknown;
 
@@ -51,7 +53,7 @@ export async function POST(request: NextRequest) {
       .insert({
         name: name.trim().slice(0, 80),
         message: message.trim().slice(0, 500),
-        approved: false,
+        approved: true,
       })
       .select("id, edit_token")
       .single();
@@ -77,8 +79,9 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Edit an existing entry. Requires the private edit token issued at creation.
-// Editing sends the message back into moderation (approved -> false).
+// Edit an existing entry. Requires the private edit token issued at
+// creation (stored client-side in localStorage — see Guestbook.tsx).
+// Editing keeps the message live; it does not send it back into review.
 export async function PATCH(request: NextRequest) {
   let body: unknown;
 
@@ -120,7 +123,6 @@ export async function PATCH(request: NextRequest) {
       .update({
         name: name.trim().slice(0, 80),
         message: message.trim().slice(0, 500),
-        approved: false,
       })
       .eq("id", id);
 
