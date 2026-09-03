@@ -148,7 +148,7 @@ export default function Invitation() {
                 <div className="mx-auto mb-6 h-32 w-32 overflow-hidden rounded-full sm:h-36 sm:w-36">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/images/baby-hero.JPG"
+                    src="/images/baby-hero.jpg"
                     alt="Azarius Niven"
                     className="photo-frame h-full w-full rounded-full object-cover"
                   />
