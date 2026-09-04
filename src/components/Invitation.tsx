@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CalendarButton from "./CalendarButton";
 import Countdown from "./Countdown";
 import Envelope from "./Envelope";
@@ -11,6 +11,7 @@ import MusicPlayer from "./MusicPlayer";
 import PhotoLightbox from "./PhotoLightbox";
 import RSVP from "./RSVP";
 import ShareButton from "./ShareButton";
+import { playUnsealChime } from "../lib/sound";
 
 // Shared scroll-reveal: each section fades/rises into place once, the
 // first time it enters the viewport — one quiet, consistent motion
@@ -22,7 +23,7 @@ const revealProps = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-// Replace /public/images/gallery-1.jpg through gallery-15.jpg with your
+// Replace /public/images/gallery-1.jpeg through gallery-16.jpeg with your
 // own photos (keep the same filenames/count) to swap the gallery.
 const GALLERY_COUNT = 16;
 const GALLERY_IMAGES = Array.from(
@@ -79,10 +80,71 @@ function StarField({ count = 14 }: { count?: number }) {
 export default function Invitation() {
   const [isOpened, setIsOpened] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // The background track. Created once on mount, but NOT auto-played here
+  // — browsers block audio autoplay on page load regardless of any code
+  // trick. It's started from handleEnvelopeOpen below instead, inside the
+  // same click that opens the envelope, which counts as a real user
+  // gesture and is allowed to start audio.
+  //
+  // Save your file as public/music/happy-birthday.wav — lowercase, no
+  // spaces. (A filename with a space or capital letters works fine on
+  // Windows locally but can 404 once deployed, same issue as the earlier
+  // image-casing bug.)
+  useEffect(() => {
+    const audio = new Audio("/music/happy-birthday.wav");
+    audio.loop = true;
+    audio.volume = 0.35;
+    audioRef.current = audio;
+
+    return () => {
+      audio.pause();
+      audioRef.current = null;
+    };
+  }, []);
+
+  function handleEnvelopeOpen() {
+    playUnsealChime();
+
+    const audio = audioRef.current;
+    if (audio) {
+      audio
+        .play()
+        .then(() => setMusicPlaying(true))
+        .catch(() => {
+          // If a browser still blocks this, the floating music button is
+          // the fallback — the guest can tap it to start the track.
+        });
+    }
+
+    setIsOpened(true);
+  }
+
+  function toggleMusic() {
+    const audio = audioRef.current;
+    if (!audio) {
+      return;
+    }
+
+    if (musicPlaying) {
+      audio.pause();
+      setMusicPlaying(false);
+      return;
+    }
+
+    audio
+      .play()
+      .then(() => setMusicPlaying(true))
+      .catch(() => {
+        console.log("Music playback was blocked.");
+      });
+  }
 
   return (
     <main className="min-h-screen overflow-hidden bg-[var(--coffee)]">
-      <MusicPlayer />
+      <MusicPlayer playing={musicPlaying} onToggle={toggleMusic} />
 
       <PhotoLightbox
         images={GALLERY_IMAGES}
@@ -145,7 +207,7 @@ export default function Invitation() {
                 You&apos;re Invited
               </motion.h1>
 
-              <Envelope onOpen={() => setIsOpened(true)} />
+              <Envelope onOpen={handleEnvelopeOpen} />
             </div>
           </motion.section>
         ) : (
@@ -330,7 +392,7 @@ export default function Invitation() {
             ================================= */}
 
             {/* Tap any photo to open it full-screen (zoom, pan, and
-               step through all 15 via the lightbox above). */}
+               step through all 16 via the lightbox above). */}
             <motion.section
               {...revealProps}
               className="bg-[var(--coffee)] px-6 py-20"
