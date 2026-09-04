@@ -16,7 +16,7 @@ const IFRAME_NAME = "gform-submit-target";
 // These must match the multiple-choice option text you create in the
 // Google Form exactly (see SETUP.md) — Google matches on the visible label.
 export const ATTENDING_YES_LABEL = "Yes, I'll be there!";
-export const ATTENDING_NO_LABEL = "Sorry, I can't";
+export const ATTENDING_NO_LABEL = "Regretfully Decline";
 
 function getHiddenIframe(): HTMLIFrameElement {
   let iframe = document.getElementsByName(IFRAME_NAME)[0] as

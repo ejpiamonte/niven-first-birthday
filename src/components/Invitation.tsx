@@ -24,7 +24,7 @@ const revealProps = {
 
 // Replace /public/images/gallery-1.jpg through gallery-15.jpg with your
 // own photos (keep the same filenames/count) to swap the gallery.
-const GALLERY_COUNT = 15;
+const GALLERY_COUNT = 16;
 const GALLERY_IMAGES = Array.from(
   { length: GALLERY_COUNT },
   (_, i) => `/images/gallery-${i + 1}.jpeg`
