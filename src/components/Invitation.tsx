@@ -32,10 +32,12 @@ const GALLERY_IMAGES = Array.from(
 );
 
 // Scattered, independently-twinkling stars instead of a fixed grid of
-// positions. Generated once per mount (useState initializer, not a bare
-// Math.random() in the render body) so positions stay put across
-// re-renders but still differ every page load and between the two
-// places this is used.
+// positions. Random positions are generated in useEffect (client-only,
+// post-mount) rather than in a useState initializer — doing it during
+// the initial render made the server's random values differ from the
+// client's on hydration, which throws a hydration-mismatch error.
+// Server and the first client render both output nothing, so they
+// match; the stars populate a moment later, client-side only.
 function StarField({ count = 14 }: { count?: number }) {
   const [stars] = useState(() =>
     Array.from({ length: count }, () => ({
@@ -59,11 +61,14 @@ function StarField({ count = 14 }: { count?: number }) {
             top: `${star.top}%`,
             width: star.size,
             height: star.size,
-            background: star.gold ? "var(--gold)" : "var(--star-white)",
+            background: star.gold
+              ? "var(--gold)"
+              : "var(--star-white)",
             boxShadow: `0 0 ${star.size * 3}px ${
               star.gold ? "var(--gold)" : "var(--star-white)"
             }`,
           }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: [0.2, 1, 0.2] }}
           transition={{
             duration: star.duration,

@@ -35,6 +35,11 @@ export default function Guestbook() {
   const [messages, setMessages] = useState<GuestMessage[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(true);
 
+  const [attendeeCount, setAttendeeCount] = useState<{
+    responses: number;
+    guests: number;
+  } | null>(null);
+
   const [myEntry, setMyEntry] = useState<MyEntry | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -46,6 +51,20 @@ export default function Guestbook() {
 
   useEffect(() => {
     void loadMessages();
+
+    fetch("/api/rsvp")
+      .then((response) => response.json())
+      .then((data) => {
+        if (typeof data.guests === "number") {
+          setAttendeeCount({
+            responses: data.responses ?? 0,
+            guests: data.guests,
+          });
+        }
+      })
+      .catch(() => {
+        // Silent — the count just won't render if this fails.
+      });
 
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -156,6 +175,18 @@ export default function Guestbook() {
   return (
     <section className="bg-[var(--coffee)] px-6 py-20 text-white">
       <div className="mx-auto max-w-md">
+        {attendeeCount && attendeeCount.guests > 0 && (
+          <div className="mb-8 text-center">
+            <p className="font-serif text-4xl text-[var(--gold)]">
+              {attendeeCount.guests}
+            </p>
+            <p className="mt-1 text-xs uppercase tracking-[0.25em] text-white/50">
+              {attendeeCount.guests === 1 ? "Guest" : "Guests"} Joining the
+              Celebration
+            </p>
+          </div>
+        )}
+
         <div className="text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-[var(--gold)]">
             Leave Some Love
