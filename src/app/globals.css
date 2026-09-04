@@ -576,7 +576,8 @@ button {
   }
 
   .cactus {
-    display: none;
+    width: 24px;
+    height: 36px;
   }
 
   .tumbleweed {

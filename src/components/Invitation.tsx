@@ -202,7 +202,7 @@ export default function Invitation() {
                 <p className="mx-auto max-w-sm text-sm leading-7 text-[var(--cream)]/70">
                   Hi! We&apos;re inviting you to celebrate the 1st birthday of
                   our baby, Azarius Niven, on October 4, 2026 at 11:30 AM at
-                  our home. Kindly RSVP on or before October 4, 2026.
+                  our home. Kindly RSVP on or before September 20, 2026.
                 </p>
 
                 <p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-[var(--cream)]/70">
