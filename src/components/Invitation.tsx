@@ -21,11 +21,57 @@ const revealProps = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
+// Scattered, independently-twinkling stars instead of a fixed grid of
+// positions. Generated once per mount (useState initializer, not a bare
+// Math.random() in the render body) so positions stay put across
+// re-renders but still differ every page load and between the two
+// places this is used.
+function StarField({ count = 14 }: { count?: number }) {
+  const [stars] = useState(() =>
+    Array.from({ length: count }, () => ({
+      left: Math.random() * 100,
+      top: Math.random() * 68,
+      size: 2 + Math.random() * 3,
+      delay: Math.random() * 3,
+      duration: 2 + Math.random() * 2.5,
+      gold: Math.random() > 0.5,
+    }))
+  );
+
+  return (
+    <div className="pointer-events-none absolute inset-0">
+      {stars.map((star, i) => (
+        <motion.span
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left: `${star.left}%`,
+            top: `${star.top}%`,
+            width: star.size,
+            height: star.size,
+            background: star.gold ? "var(--gold)" : "var(--star-white)",
+            boxShadow: `0 0 ${star.size * 3}px ${
+              star.gold ? "var(--gold)" : "var(--star-white)"
+            }`,
+          }}
+          animate={{ opacity: [0.2, 1, 0.2] }}
+          transition={{
+            duration: star.duration,
+            delay: star.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function Invitation() {
   const [isOpened, setIsOpened] = useState(false);
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[var(--navy)]">
+    <main className="min-h-screen overflow-hidden bg-[var(--coffee)]">
       <MusicPlayer />
 
       <AnimatePresence mode="wait">
@@ -45,31 +91,7 @@ export default function Invitation() {
             <div className="story-ground" />
 
             {/* Stars */}
-            <div className="pointer-events-none absolute inset-0">
-              <span className="star absolute left-[15%] top-[18%] text-sm text-[var(--gold)]">
-                ✦
-              </span>
-
-              <span className="star star-delay-1 absolute right-[18%] top-[25%] text-xs text-[var(--dust)]">
-                ✧
-              </span>
-
-              <span className="star star-delay-2 star-rust absolute left-[25%] top-[68%] text-xs">
-                ✦
-              </span>
-
-              <span className="star star-delay-3 absolute right-[22%] top-[72%] text-sm text-[var(--dust)]">
-                ✧
-              </span>
-
-              <span className="star absolute left-[8%] top-[45%] text-[10px] text-[var(--gold)]">
-                ✦
-              </span>
-
-              <span className="star star-delay-2 star-rust absolute right-[8%] top-[52%] text-[10px]">
-                ✦
-              </span>
-            </div>
+            <StarField count={16} />
 
             {/* Opening content */}
             <div className="relative z-10 w-full max-w-md text-center">
@@ -133,30 +155,12 @@ export default function Invitation() {
               <div className="story-mountains" />
               <div className="story-ground" />
 
-              <div className="pointer-events-none absolute inset-0">
-                <span className="star absolute left-[12%] top-[18%] text-sm text-[var(--gold)]">
-                  ✦
-                </span>
+              <StarField count={20} />
 
-                <span className="star star-delay-1 absolute right-[15%] top-[24%] text-xs text-[var(--dust)]">
-                  ✧
-                </span>
-
-                <span className="star star-delay-2 star-rust absolute left-[20%] top-[70%] text-xs">
-                  ✦
-                </span>
-
-                <span className="star star-delay-3 absolute right-[20%] top-[68%] text-sm text-[var(--dust)]">
-                  ✧
-                </span>
-              </div>
-
-              {/* Corner cacti — small, still, a quiet frontier detail */}
-              <div className="pointer-events-none absolute bottom-[8%] left-[6%] hidden sm:block">
+              {/* Cactus — centered near the horizon, desktop only (kept
+                 off mobile so it doesn't crowd the photo/text column). */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-[9%] hidden justify-center sm:flex">
                 <div className="cactus" />
-              </div>
-              <div className="pointer-events-none absolute bottom-[8%] right-[6%] hidden sm:block">
-                <div className="cactus" style={{ animationDelay: "1.4s" }} />
               </div>
 
               <div className="relative z-10 w-full max-w-md text-center">
@@ -281,7 +285,7 @@ export default function Invitation() {
                the same filename) to swap it. */}
             <motion.section
               {...revealProps}
-              className="bg-[var(--navy)] px-6 pt-16"
+              className="bg-[var(--coffee)] px-6 pt-16"
             >
               <div className="mx-auto flex max-w-md flex-col items-center text-center">
                 <div className="lasso-border w-fit">
@@ -307,7 +311,7 @@ export default function Invitation() {
 
             <motion.section
               {...revealProps}
-              className="bg-[var(--night)] px-6 py-16"
+              className="bg-[var(--coffee-deep)] px-6 py-16"
             >
               <div className="mx-auto max-w-md space-y-4">
                 <CalendarButton />
@@ -319,7 +323,7 @@ export default function Invitation() {
                 FOOTER
             ================================= */}
 
-            <footer className="bg-[var(--night)] px-6 py-12 text-center">
+            <footer className="bg-[var(--coffee-deep)] px-6 py-12 text-center">
               <div className="wheel-divider mb-6 justify-center">
                 <span className="wheel-divider-hub" aria-hidden="true" />
               </div>

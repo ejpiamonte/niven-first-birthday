@@ -18,6 +18,11 @@
   --wood-light: #8A5C39;
   --dust: #E7C88A;      /* trail dust / rope highlight */
   --star-white: #FFF8DE;
+
+  /* --- new: shared with Location.tsx, Guestbook.tsx, and the
+     Envelope/hero — the site's actual base dark tone --- */
+  --coffee: #2B1810;
+  --coffee-deep: #1A0F09;
 }
 
 *,
@@ -336,28 +341,14 @@ button {
   background-color: var(--cream);
 }
 
-/* Night-sky hero */
+/* Night-sky hero, now in the site's actual coffee-brown rather than navy */
 .story-night {
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 76% 17%, rgba(255,255,255,.12), transparent 2px),
-    radial-gradient(circle at 23% 26%, rgba(212,175,90,.16), transparent 1px),
-    linear-gradient(180deg, #0B2035 0%, #102A43 58%, #163A5F 100%);
-}
-
-.story-night::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: .7;
-  background-image:
-    radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.6px),
-    radial-gradient(circle, rgba(212,175,90,.8) 0 1px, transparent 1.7px);
-  background-size: 83px 71px, 121px 103px;
-  background-position: 10px 14px, 42px 37px;
-  pointer-events: none;
-  animation: star-twinkle 4s ease-in-out infinite alternate;
+    radial-gradient(circle at 76% 17%, rgba(255,255,255,.08), transparent 2px),
+    radial-gradient(circle at 23% 26%, rgba(212,175,90,.12), transparent 1px),
+    linear-gradient(180deg, var(--coffee-deep) 0%, var(--coffee) 58%, var(--wood) 100%);
 }
 
 .story-moon {
@@ -379,7 +370,7 @@ button {
   left: 15px;
   top: -5px;
   border-radius: 50%;
-  background: #0E2943;
+  background: var(--coffee-deep);
 }
 
 .story-stars {
@@ -391,13 +382,6 @@ button {
   to { transform: translateY(-5px); }
 }
 
-/* --- new: subtle brightness pulse layered onto the existing star
-   field so the night sky feels alive without adding new markup --- */
-@keyframes star-twinkle {
-  0% { opacity: .55; }
-  100% { opacity: .9; }
-}
-
 .story-mountains {
   position: absolute;
   left: -5%;
@@ -405,9 +389,9 @@ button {
   bottom: 0;
   height: 32%;
   background:
-    linear-gradient(145deg, transparent 0 39%, #0A1C2D 40% 58%, transparent 59%) 0 35% / 46% 90% no-repeat,
-    linear-gradient(35deg, transparent 0 39%, #0A1C2D 40% 61%, transparent 62%) 36% 25% / 55% 100% no-repeat,
-    linear-gradient(160deg, transparent 0 42%, #091A2B 43% 63%, transparent 64%) 70% 25% / 44% 100% no-repeat;
+    linear-gradient(145deg, transparent 0 39%, #140B06 40% 58%, transparent 59%) 0 35% / 46% 90% no-repeat,
+    linear-gradient(35deg, transparent 0 39%, #140B06 40% 61%, transparent 62%) 36% 25% / 55% 100% no-repeat,
+    linear-gradient(160deg, transparent 0 42%, #100804 43% 63%, transparent 64%) 70% 25% / 44% 100% no-repeat;
   pointer-events: none;
 }
 
@@ -417,7 +401,7 @@ button {
   right: -5%;
   bottom: -1px;
   height: 18%;
-  background: #0A1C2D;
+  background: #140B06;
   clip-path: polygon(0 42%, 14% 31%, 29% 45%, 42% 25%, 57% 44%, 70% 28%, 84% 43%, 100% 31%, 100% 100%, 0 100%);
 }
 

@@ -141,7 +141,7 @@ export default function Guestbook() {
   const showForm = !myEntry || isEditing;
 
   return (
-    <section className="bg-[var(--navy)] px-6 py-20 text-white">
+    <section className="bg-[var(--coffee)] px-6 py-20 text-white">
       <div className="mx-auto max-w-md">
         <div className="text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-[var(--gold)]">

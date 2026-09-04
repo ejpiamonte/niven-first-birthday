@@ -45,7 +45,7 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
       <motion.div
         animate={isBreaking ? { y: [0, -4, 0] } : {}}
         transition={{ duration: 0.35 }}
-        className="relative aspect-[1.45/1] overflow-hidden rounded-lg bg-[var(--navy)] shadow-2xl"
+        className="relative aspect-[1.45/1] overflow-hidden rounded-lg bg-[var(--coffee)] shadow-2xl"
       >
         {/* Envelope texture */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_rgba(255,255,255,0.08),_transparent_40%)]" />
@@ -55,7 +55,7 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
           className="absolute inset-x-0 bottom-0 z-20 h-[65%]"
           style={{
             clipPath: "polygon(0 100%, 50% 25%, 100% 100%)",
-            background: "var(--blue)",
+            background: "var(--wood)",
           }}
         />
 
@@ -64,7 +64,7 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
           className="absolute inset-y-0 left-0 z-10 w-1/2"
           style={{
             clipPath: "polygon(0 0, 100% 50%, 0 100%)",
-            background: "var(--night)",
+            background: "var(--coffee-deep)",
           }}
         />
 
@@ -73,7 +73,7 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
           className="absolute inset-y-0 right-0 z-10 w-1/2"
           style={{
             clipPath: "polygon(100% 0, 0 50%, 100% 100%)",
-            background: "var(--navy)",
+            background: "var(--wood-light)",
           }}
         />
 
@@ -125,7 +125,7 @@ export default function Envelope({ onOpen }: EnvelopeProps) {
             className="pointer-events-none absolute inset-0 rounded-full"
             style={{
               background:
-                "linear-gradient(115deg, transparent 46%, rgba(23,50,74,.55) 49%, transparent 53%)",
+                "linear-gradient(115deg, transparent 46%, rgba(26,15,9,.55) 49%, transparent 53%)",
             }}
           />
         </motion.div>
