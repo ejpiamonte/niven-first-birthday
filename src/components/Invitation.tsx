@@ -8,6 +8,7 @@ import Envelope from "./Envelope";
 import Guestbook from "./Guestbook";
 import Location from "./Location";
 import MusicPlayer from "./MusicPlayer";
+import PhotoLightbox from "./PhotoLightbox";
 import RSVP from "./RSVP";
 import ShareButton from "./ShareButton";
 
@@ -20,6 +21,14 @@ const revealProps = {
   viewport: { once: true, margin: "-80px" },
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
+
+// Replace /public/images/gallery-1.jpg through gallery-15.jpg with your
+// own photos (keep the same filenames/count) to swap the gallery.
+const GALLERY_COUNT = 15;
+const GALLERY_IMAGES = Array.from(
+  { length: GALLERY_COUNT },
+  (_, i) => `/images/gallery-${i + 1}.jpeg`
+);
 
 // Scattered, independently-twinkling stars instead of a fixed grid of
 // positions. Generated once per mount (useState initializer, not a bare
@@ -69,10 +78,18 @@ function StarField({ count = 14 }: { count?: number }) {
 
 export default function Invitation() {
   const [isOpened, setIsOpened] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[var(--coffee)]">
       <MusicPlayer />
+
+      <PhotoLightbox
+        images={GALLERY_IMAGES}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onNavigate={setLightboxIndex}
+      />
 
       <AnimatePresence mode="wait">
         {!isOpened ? (
@@ -157,10 +174,13 @@ export default function Invitation() {
 
               <StarField count={20} />
 
-              {/* Cactus — centered near the horizon, desktop only (kept
-                 off mobile so it doesn't crowd the photo/text column). */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-[9%] hidden justify-center sm:flex">
+              {/* Cactus pair — visible on all screen sizes now, spaced
+                 apart so they don't collide with the centered photo/text
+                 column even on narrow phones. Scaled down slightly below
+                 the sm breakpoint via the CSS media query in globals.css. */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-[9%] flex justify-center gap-24 sm:gap-40">
                 <div className="cactus" />
+                <div className="cactus" style={{ animationDelay: "1.4s" }} />
               </div>
 
               <div className="relative z-10 w-full max-w-md text-center">
@@ -302,6 +322,52 @@ export default function Invitation() {
                 <p className="mt-5 max-w-xs text-sm leading-7 text-[var(--cream)]/60">
                   We can&apos;t wait to celebrate this milestone with you.
                 </p>
+              </div>
+            </motion.section>
+
+            {/* ================================
+                PHOTO GALLERY
+            ================================= */}
+
+            {/* Tap any photo to open it full-screen (zoom, pan, and
+               step through all 15 via the lightbox above). */}
+            <motion.section
+              {...revealProps}
+              className="bg-[var(--coffee)] px-6 py-20"
+            >
+              <div className="mx-auto max-w-2xl text-center">
+                <p className="text-xs uppercase tracking-[0.35em] text-[var(--gold)]">
+                  Little Moments
+                </p>
+
+                <h2 className="mt-4 font-serif text-4xl text-[var(--cream)]">
+                  A Year in Pictures
+                </h2>
+
+                <p className="mx-auto mt-3 max-w-sm text-xs uppercase tracking-[0.2em] text-[var(--cream)]/40">
+                  Tap a photo to view it full-screen
+                </p>
+              </div>
+
+              <div className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4">
+                {GALLERY_IMAGES.map((src, i) => (
+                  <motion.button
+                    key={src}
+                    type="button"
+                    onClick={() => setLightboxIndex(i)}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    aria-label={`Open photo ${i + 1} of ${GALLERY_IMAGES.length}`}
+                    className="story-photo aspect-square cursor-zoom-in overflow-hidden rounded-2xl"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={src}
+                      alt={`Azarius Niven — photo ${i + 1}`}
+                      className="h-full w-full object-cover"
+                    />
+                  </motion.button>
+                ))}
               </div>
             </motion.section>
 

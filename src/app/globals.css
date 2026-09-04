@@ -19,8 +19,9 @@
   --dust: #E7C88A;      /* trail dust / rope highlight */
   --star-white: #FFF8DE;
 
-  /* --- new: shared with Location.tsx, Guestbook.tsx, and the
-     Envelope/hero — the site's actual base dark tone --- */
+  /* The site's actual base dark tone for the hero/footer/photo
+     sections — intentionally warm brown, distinct from --navy (which
+     is used as an accent/text color on the cream sections instead). */
   --coffee: #2B1810;
   --coffee-deep: #1A0F09;
 }
@@ -341,7 +342,9 @@ button {
   background-color: var(--cream);
 }
 
-/* Night-sky hero, now in the site's actual coffee-brown rather than navy */
+/* Night-sky hero, in the site's brown palette (--coffee/--coffee-deep)
+   rather than navy — kept driven entirely by variables so it always
+   follows whatever those two are set to, instead of a hardcoded color. */
 .story-night {
   position: relative;
   overflow: hidden;
@@ -370,6 +373,9 @@ button {
   left: 15px;
   top: -5px;
   border-radius: 50%;
+  /* Matches the sky color directly behind it (--coffee-deep, top of
+     the .story-night gradient) so the crescent cutout actually blends
+     in rather than showing a mismatched ring. */
   background: var(--coffee-deep);
 }
 
@@ -382,6 +388,8 @@ button {
   to { transform: translateY(-5px); }
 }
 
+/* Mountain/ground silhouettes — warm near-black brown, consistent with
+   the --coffee family the sky above them uses. */
 .story-mountains {
   position: absolute;
   left: -5%;
@@ -401,7 +409,7 @@ button {
   right: -5%;
   bottom: -1px;
   height: 18%;
-  background: #140B06;
+  background: #100804;
   clip-path: polygon(0 42%, 14% 31%, 29% 45%, 42% 25%, 57% 44%, 70% 28%, 84% 43%, 100% 31%, 100% 100%, 0 100%);
 }
 

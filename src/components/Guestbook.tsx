@@ -18,6 +18,19 @@ type MyEntry = {
 
 const STORAGE_KEY = "azarius-guestbook-entry";
 
+function formatTimestamp(iso: string) {
+  const date = new Date(iso);
+  const datePart = date.toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
+  const timePart = date.toLocaleTimeString(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+  return `${datePart} · ${timePart}`;
+}
+
 export default function Guestbook() {
   const [messages, setMessages] = useState<GuestMessage[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(true);
@@ -159,7 +172,7 @@ export default function Guestbook() {
         </div>
 
         {/* Messages */}
-        <div className="mt-10 space-y-4">
+        <div className="mt-8 space-y-3">
           {loadingMessages && (
             <p className="text-center text-xs uppercase tracking-[0.2em] text-white/30">
               Loading messages...
@@ -175,17 +188,21 @@ export default function Guestbook() {
           {messages.map((item) => (
             <div
               key={item.id}
-              className="rounded-2xl border border-[var(--gold)]/20 bg-white/[0.04] p-5"
+              className="rounded-xl border border-[var(--gold)]/20 bg-white/[0.04] px-4 py-3"
             >
-              <div className="text-[var(--gold)]">&ldquo;</div>
-
-              <p className="mt-1 text-sm leading-7 text-white/80">
+              <p className="text-[13px] leading-5 text-white/80">
                 {item.message}
               </p>
 
-              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-[var(--dust)]">
-                — {item.name}
-              </p>
+              <div className="mt-1.5 flex items-center justify-between gap-2">
+                <p className="text-[11px] uppercase tracking-[0.15em] text-[var(--dust)]">
+                  — {item.name}
+                </p>
+
+                <p className="shrink-0 text-[10px] text-white/35">
+                  {formatTimestamp(item.created_at)}
+                </p>
+              </div>
             </div>
           ))}
         </div>

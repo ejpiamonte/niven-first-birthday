@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const SITE_URL = "https://niven-first-birthday.vercel.app/";
+
 export default function ShareButton() {
   const [copied, setCopied] = useState(false);
 
@@ -9,7 +11,7 @@ export default function ShareButton() {
     const shareData = {
       title: "Azarius's 1st Birthday",
       text: "You're invited to celebrate Azarius Niven's first birthday! 🎂",
-      url: window.location.href,
+      url: SITE_URL,
     };
 
     if (navigator.share) {
@@ -23,7 +25,7 @@ export default function ShareButton() {
     }
 
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(SITE_URL);
 
       setCopied(true);
 
@@ -38,7 +40,7 @@ export default function ShareButton() {
   return (
     <button
       onClick={shareInvitation}
-      className="w-full rounded-full bg-[#C9973B] px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#2B1810] transition hover:bg-[#E8C87A]"
+      className="w-full rounded-full bg-[var(--gold)] px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--coffee)] transition hover:bg-[var(--dust)]"
     >
       {copied ? "✓ Link Copied!" : "📤 Share Invitation"}
     </button>
