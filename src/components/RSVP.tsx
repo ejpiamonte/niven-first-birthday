@@ -1,4 +1,3 @@
-// src/components/RSVP.tsx
 "use client";
 
 import { useState } from "react";
@@ -35,26 +34,6 @@ export default function RSVP() {
         message: message.trim(),
       });
 
-      // Best-effort: also record this in Supabase so the on-page
-      // attendee counter (shown above the Guestbook) can reflect it.
-      // If this fails, don't block the confirmation — the Google Form
-      // submission above is the one that actually matters; this just
-      // feeds the counter.
-      try {
-        await fetch("/api/rsvp", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: name.trim(),
-            attending,
-            guestCount,
-            message: message.trim(),
-          }),
-        });
-      } catch {
-        // Silent — the counter just won't include this response yet.
-      }
-
       setSubmitted(true);
     } catch (submitError) {
       console.error(submitError);
@@ -78,7 +57,7 @@ export default function RSVP() {
 
           <p className="mt-5 text-sm leading-7 text-[var(--muted)]">
             Thank you for letting us know. We&apos;re looking forward to
-            celebrating Niven&apos;s special day with you!
+            celebrating Azarius&apos;s special day with you!
           </p>
 
           <button
@@ -215,7 +194,7 @@ export default function RSVP() {
               id="rsvp-message"
               value={message}
               onChange={(event) => setMessage(event.target.value)}
-              placeholder="Leave a message for Niven..."
+              placeholder="Leave a message for Azarius..."
               rows={4}
               className="mt-3 w-full resize-none rounded-xl border border-[var(--gold)]/40 bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--gold)]"
             />
