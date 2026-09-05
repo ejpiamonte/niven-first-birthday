@@ -23,7 +23,7 @@ export async function GET() {
     "SUMMARY:Azarius's 1st Birthday",
     "LOCATION:Our Home",
     "GEO:14.743929;120.967935",
-    "DESCRIPTION:Join us as we celebrate Azarius Niven's first birthday! Directions: https://www.google.com/maps/dir/?api=1&destination=14.743929%2C120.967935",
+    "DESCRIPTION:Join us as we celebrate Azarius Niven's 1st birthday! Directions: https://www.google.com/maps/dir/?api=1&destination=14.743929%2C120.967935",
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");

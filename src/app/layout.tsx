@@ -20,14 +20,14 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Azarius Niven | First Birthday",
+  title: "Azarius Niven | 1st Birthday",
   description:
-    "You're invited to celebrate Azarius Niven's first birthday on October 4, 2026 at 11:30 AM, at our home.",
+    "You're invited to celebrate Azarius Niven's 1st birthday on October 4, 2026 at 11:30 AM, at our home.",
 
   openGraph: {
-    title: "Azarius Niven | First Birthday",
+    title: "Azarius Niven | 1st Birthday",
     description:
-      "Join us as we celebrate Azarius Niven's first birthday — October 4, 2026, 11:30 AM at our home.",
+      "Join us as we celebrate Azarius Niven's 1st birthday — October 4, 2026, 11:30 AM at our home.",
     type: "website",
     locale: "en_PH",
     siteName: "Azarius's 1st Birthday",
@@ -37,16 +37,16 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Azarius Niven's First Birthday Invitation",
+        alt: "Azarius Niven's 1st Birthday Invitation",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Azarius Niven | First Birthday",
+    title: "Azarius Niven | 1st Birthday",
     description:
-      "Join us as we celebrate Azarius Niven's first birthday.",
+      "Join us as we celebrate Azarius Niven's 1st birthday.",
     images: ["/og-image.jpg"],
   },
 };

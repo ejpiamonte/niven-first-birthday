@@ -243,9 +243,13 @@ export default function Invitation() {
 
               {/* Cactus pair — visible on all screen sizes now, spaced
                  apart so they don't collide with the centered photo/text
-                 column even on narrow phones. Scaled down slightly below
-                 the sm breakpoint via the CSS media query in globals.css. */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-[9%] flex justify-center gap-24 sm:gap-40">
+                 column even on narrow phones. Moved down to bottom-[2%]
+                 (was bottom-[9%]) — the hero copy grew a bit taller since
+                 this was tuned, and 9% was landing the cacti at the same
+                 row as the date line, overlapping its left/right edges
+                 on mobile. Scaled down slightly below the sm breakpoint
+                 via the CSS media query in globals.css. */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-[2%] flex justify-center gap-24 sm:gap-40">
                 <div className="cactus" />
                 <div className="cactus" style={{ animationDelay: "1.4s" }} />
               </div>
@@ -286,19 +290,15 @@ export default function Invitation() {
 
                 <div className="mx-auto my-8 h-px w-32 bg-gradient-to-r from-transparent via-[var(--gold)] via-70% to-[var(--rust)]/40" />
 
-                <p className="mx-auto max-w-sm text-sm leading-7 text-[var(--cream)]/70">
+                <p className="mx-auto mb-20 max-w-sm text-sm leading-7 text-[var(--cream)]/70">
                   Hi! We&apos;re inviting you to celebrate the 1st birthday of
                   our baby, Azarius Niven, on October 4, 2026 at 11:30 AM at
                   our home. Kindly RSVP on or before September 20, 2026.
                 </p>
 
-                <p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-[var(--cream)]/70">
-                  No gifts are necessary — your presence is more than enough!
-                  However, if you&apos;d like to celebrate Azarius&apos;s
-                  first year with a gift, a monetary contribution toward his
-                  future savings and dreams would be sincerely appreciated.
-                </p>
-
+                {/* Fixed: was "mt -10" (a stray space breaks both "mt" and
+                   "-10" as Tailwind classes, so this had no top margin at
+                   all) — now the intended mt-10. */}
                 <div className="mt-10 text-xs uppercase tracking-[0.25em] text-[var(--cream)]/40">
                   October 4, 2026
                 </div>

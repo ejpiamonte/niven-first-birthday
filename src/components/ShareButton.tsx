@@ -10,7 +10,7 @@ export default function ShareButton() {
   async function shareInvitation() {
     const shareData = {
       title: "Azarius's 1st Birthday",
-      text: "You're invited to celebrate Azarius Niven's first birthday! 🎂",
+      text: "You're invited to celebrate Azarius Niven's 1st birthday! 🎂",
       url: SITE_URL,
     };
 
