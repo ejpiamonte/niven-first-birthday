@@ -1,3 +1,4 @@
+// src/lib/supabase.tsx
 import { createClient } from "@supabase/supabase-js";
 
 /**

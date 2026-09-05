@@ -1,3 +1,4 @@
+// src/lib/googleForm.ts
 // Submits the RSVP silently to a Google Form so responses land in the
 // Form's own Responses tab (totals, Yes/No pie chart, linked Sheet) without
 // showing any Google UI to the guest. See SETUP.md for how to create the

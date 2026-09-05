@@ -1,3 +1,4 @@
+// src/lib/Sound.ts
 // Synthesizes the envelope-unseal sound effect on the fly (a soft wax
 // "crack" followed by a bright three-note sparkle chime) using the Web
 // Audio API. Deliberately not an external audio file — nothing to

@@ -1,3 +1,4 @@
+// src/components/MusicPlayer.tsx
 "use client";
 
 type MusicPlayerProps = {

@@ -1,3 +1,4 @@
+// src/app/page.tsx
 import Invitation from "@/src/components/Invitation";
 
 export default function Home() {

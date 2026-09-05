@@ -1,3 +1,4 @@
+// src/components/Location.tsx
 // Converted from the DMS coordinates you gave:
 //   Home: 14.743929, 120.967935
 const HOME_COORDS = { lat: 14.743929, lng: 120.967935 };

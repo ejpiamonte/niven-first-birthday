@@ -1,3 +1,4 @@
+// src/app/api/rsvp/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import getSupabaseAdmin from "@/src/lib/supabase";
 

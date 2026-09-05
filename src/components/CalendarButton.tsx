@@ -1,3 +1,4 @@
+// src/components/CalendarButton.tsx
 // A plain link, not a JS-triggered download or data: URI — those are the
 // two approaches that turned out unreliable on iOS (the data: URI just
 // loaded a blank/blocked navigation with no calendar prompt). This

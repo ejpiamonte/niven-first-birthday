@@ -1,3 +1,4 @@
+// src/app/api/calendar/route.ts
 import { NextResponse } from "next/server";
 
 // Serves the calendar event as a real HTTP resource instead of a

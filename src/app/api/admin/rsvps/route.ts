@@ -1,3 +1,4 @@
+// src/app/api/admin/rsvps/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { ATTENDING_YES_LABEL } from "@/src/lib/googleForm";
 

@@ -1,3 +1,4 @@
+// src/components/RSVP.tsx
 "use client";
 
 import { useState } from "react";
