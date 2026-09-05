@@ -276,8 +276,6 @@ export default function Invitation() {
 
                 <h1 className="font-serif text-5xl leading-tight text-[var(--cream)] sm:text-6xl">
                   Niven
-                  <br />
-                  Niven
                 </h1>
 
                 <p className="mt-6 text-sm uppercase tracking-[0.3em] text-[var(--dust)]">
