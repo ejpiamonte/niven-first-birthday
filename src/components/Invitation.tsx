@@ -262,7 +262,7 @@ export default function Invitation() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/baby-hero.jpg"
-                      alt="Azarius Niven"
+                      alt="Niven"
                       className="h-full w-full rounded-full object-cover"
                     />
                   </div>
@@ -275,7 +275,7 @@ export default function Invitation() {
                 <div className="my-7 text-2xl text-[var(--gold)]">✦</div>
 
                 <h1 className="font-serif text-5xl leading-tight text-[var(--cream)] sm:text-6xl">
-                  Azarius
+                  Niven
                   <br />
                   Niven
                 </h1>
@@ -292,7 +292,7 @@ export default function Invitation() {
 
                 <p className="mx-auto mb-20 max-w-sm text-sm leading-7 text-[var(--cream)]/70">
                   Hi! We&apos;re inviting you to celebrate the 1st birthday of
-                  our baby, Azarius Niven, on October 4, 2026 at 11:30 AM at
+                  our baby, Niven, on October 4, 2026 at 11:30 AM at
                   our home. Kindly RSVP on or before September 20, 2026.
                 </p>
 
@@ -351,7 +351,7 @@ export default function Invitation() {
                   </p>
 
                   <p className="mt-2 font-serif text-2xl text-[var(--navy)]">
-                    Azarius&apos;s 1st Birthday
+                    Niven&apos;s 1st Birthday
                   </p>
                 </div>
 
@@ -380,7 +380,7 @@ export default function Invitation() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/baby-closing2.jpg"
-                      alt="Azarius Niven smiling"
+                      alt="Niven smiling"
                       className="h-full w-full rounded-full object-cover"
                     />
                   </div>
@@ -430,7 +430,7 @@ export default function Invitation() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={src}
-                      alt={`Azarius Niven — photo ${i + 1}`}
+                      alt={`Niven — photo ${i + 1}`}
                       className="h-full w-full object-cover"
                     />
                   </motion.button>
@@ -462,7 +462,7 @@ export default function Invitation() {
               </div>
 
               <p className="font-serif text-xl text-[var(--cream)]">
-                Azarius Niven
+                Niven
               </p>
 
               <p className="mt-2 text-xs uppercase tracking-[0.25em] text-[var(--cream)]/40">

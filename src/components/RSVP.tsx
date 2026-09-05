@@ -77,7 +77,7 @@ export default function RSVP() {
 
           <p className="mt-5 text-sm leading-7 text-[var(--muted)]">
             Thank you for letting us know. We&apos;re looking forward to
-            celebrating Azarius&apos;s special day with you!
+            celebrating Niven&apos;s special day with you!
           </p>
 
           <button
@@ -214,7 +214,7 @@ export default function RSVP() {
               id="rsvp-message"
               value={message}
               onChange={(event) => setMessage(event.target.value)}
-              placeholder="Leave a message for Azarius..."
+              placeholder="Leave a message for Niven..."
               rows={4}
               className="mt-3 w-full resize-none rounded-xl border border-[var(--gold)]/40 bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--gold)]"
             />

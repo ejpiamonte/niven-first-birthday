@@ -197,7 +197,7 @@ export default function Guestbook() {
           </h2>
 
           <p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-white/60">
-            Leave a birthday message that Azarius and our family can look
+            Leave a birthday message that Niven and our family can look
             back on for years to come.
           </p>
         </div>

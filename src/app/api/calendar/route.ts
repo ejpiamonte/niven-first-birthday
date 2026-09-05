@@ -12,7 +12,7 @@ export async function GET() {
   const ics = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Azarius Birthday//EN",
+    "PRODID:-//Niven Birthday//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VEVENT",
@@ -20,10 +20,10 @@ export async function GET() {
     "DTSTAMP:20260810T000000Z",
     "DTSTART:20261004T033000Z",
     "DTEND:20261004T063000Z",
-    "SUMMARY:Azarius's 1st Birthday",
+    "SUMMARY:Niven 1st Birthday",
     "LOCATION:Our Home",
     "GEO:14.743929;120.967935",
-    "DESCRIPTION:Join us as we celebrate Azarius Niven's 1st birthday! Directions: https://www.google.com/maps/dir/?api=1&destination=14.743929%2C120.967935",
+    "DESCRIPTION:Join us as we celebrate Niven's 1st birthday! Directions: https://www.google.com/maps/dir/?api=1&destination=14.743929%2C120.967935",
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");

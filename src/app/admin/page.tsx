@@ -123,7 +123,7 @@ export default function AdminPage() {
   return (
     <main className="min-h-screen bg-[#2B1810] px-6 py-16 text-white">
       <div className="mx-auto max-w-3xl">
-        <h1 className="font-serif text-3xl text-[#F5EDE0]">Azarius&apos;s Birthday — Admin</h1>
+        <h1 className="font-serif text-3xl text-[#F5EDE0]">Niven&apos;s Birthday — Admin</h1>
 
         <p className="mt-2 text-sm text-white/50">
           Looking for RSVP totals? Open your Google Form&apos;s Responses tab
