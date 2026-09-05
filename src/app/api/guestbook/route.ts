@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import getSupabaseAdmin from "@/src/lib/supabase";
 
+// .slice() cuts by UTF-16 code unit, not by character — most emoji are
+// two code units, so a plain .slice(0, n) landing exactly mid-emoji
+// would leave a broken half-character at the end. Array.from splits by
+// Unicode code point instead, so this cuts between whole characters.
+function truncate(value: string, maxLength: number): string {
+  return Array.from(value).slice(0, maxLength).join("");
+}
+
 // Public: list live messages, newest last.
 export async function GET() {
   try {
@@ -51,8 +59,8 @@ export async function POST(request: NextRequest) {
     const { data, error } = await supabase
       .from("guestbook")
       .insert({
-        name: name.trim().slice(0, 80),
-        message: message.trim().slice(0, 500),
+        name: truncate(name.trim(), 80),
+        message: truncate(message.trim(), 500),
         approved: true,
       })
       .select("id, edit_token")
@@ -121,8 +129,8 @@ export async function PATCH(request: NextRequest) {
     const { error: updateError } = await supabase
       .from("guestbook")
       .update({
-        name: name.trim().slice(0, 80),
-        message: message.trim().slice(0, 500),
+        name: truncate(name.trim(), 80),
+        message: truncate(message.trim(), 500),
       })
       .eq("id", id);
 
