@@ -45,3 +45,8 @@ The invitation and calendar event currently use October 4, 2026 at 11:30 AM (Phi
 ## Deployment
 
 Deploy as a standard Next.js application (for example, on Vercel). Configure the required environment variables in the deployment environment before publishing. `NEXT_PUBLIC_*` values are embedded in browser code at build time; set them before building. See [SETUP.md](SETUP.md) for the full list.
+
+
+## Shared Supabase setup
+
+To share the existing Northstar project with LedgerLens and Niven, see [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) and [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md). Inspect hosted metadata before applying [the additive SQL](supabase/shared/002_add_to_existing_northstar.sql). The empty bootstrap is for empty destinations only. No existing records or files are imported. SQL execution against Supabase remains pending.
