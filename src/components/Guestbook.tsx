@@ -7,7 +7,6 @@ type GuestMessage = {
   id: string;
   name: string;
   message: string;
-  created_at: string;
 };
 
 type MyEntry = {
@@ -19,22 +18,10 @@ type MyEntry = {
 
 const STORAGE_KEY = "azarius-guestbook-entry";
 
-function formatTimestamp(iso: string) {
-  const date = new Date(iso);
-  const datePart = date.toLocaleDateString(undefined, {
-    month: "short",
-    day: "numeric",
-  });
-  const timePart = date.toLocaleTimeString(undefined, {
-    hour: "numeric",
-    minute: "2-digit",
-  });
-  return `${datePart} · ${timePart}`;
-}
-
 export default function Guestbook() {
   const [messages, setMessages] = useState<GuestMessage[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(true);
+  const [messagesError, setMessagesError] = useState("");
 
   const [attendeeCount, setAttendeeCount] = useState<{
     responses: number;
@@ -87,13 +74,24 @@ export default function Guestbook() {
 
   async function loadMessages() {
     setLoadingMessages(true);
+    setMessagesError("");
 
     try {
       const response = await fetch("/api/guestbook");
-      const data = await response.json();
+      const data = await response.json().catch(() => null);
+      if (!response.ok) {
+        throw new Error(data?.error || "Could not load birthday messages.");
+      }
       setMessages(data.messages ?? []);
-    } catch {
-      // Silently fail — the form below still works.
+      if (data.warning) {
+        setMessagesError(data.warning);
+      }
+    } catch (loadError) {
+      setMessagesError(
+        loadError instanceof Error
+          ? loadError.message
+          : "Could not load birthday messages."
+      );
     } finally {
       setLoadingMessages(false);
     }
@@ -217,6 +215,12 @@ export default function Guestbook() {
             </p>
           )}
 
+          {messagesError && (
+            <p role="status" className="text-center text-xs text-white/50">
+              {messagesError}
+            </p>
+          )}
+
           {messages.map((item) => (
             <div
               key={item.id}
@@ -231,9 +235,6 @@ export default function Guestbook() {
                   — {item.name}
                 </p>
 
-                <p className="shrink-0 text-[10px] text-white/35">
-                  {formatTimestamp(item.created_at)}
-                </p>
               </div>
             </div>
           ))}

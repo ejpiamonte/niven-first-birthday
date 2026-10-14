@@ -97,22 +97,34 @@ export async function fetchRsvpRows(): Promise<RsvpSheetRow[]> {
   }
 
   const csvText = await response.text();
+  if (/^\s*(<!doctype\s+html|<html)/i.test(csvText)) {
+    throw new Error(
+      "The configured Google Sheet URL returned HTML instead of CSV. Publish the response sheet as CSV and update GOOGLE_SHEET_CSV_URL."
+    );
+  }
+
   const table = parseCsv(csvText);
 
   if (table.length === 0) {
     return [];
   }
 
-  const header = table[0].map((h) => h.trim().toLowerCase());
+  const header = table[0].map((h) => h.replace(/^\uFEFF/, "").trim().toLowerCase());
   const dataRows = table.slice(1);
 
   // Match columns by header text rather than fixed position, so this
   // keeps working even if the Form's question order ever changes.
   const timestampIdx = header.findIndex((h) => h.includes("timestamp"));
   const nameIdx = header.findIndex((h) => h.includes("name"));
-  const attendingIdx = header.findIndex((h) => h.includes("joining"));
-  const guestsIdx = header.findIndex((h) => h.includes("guest"));
-  const messageIdx = header.findIndex((h) => h.includes("message"));
+  const attendingIdx = header.findIndex(
+    (h) => h.includes("joining") || h.includes("attend") || h.includes("rsvp")
+  );
+  const guestsIdx = header.findIndex(
+    (h) => h.includes("guest") || h.includes("party size") || h.includes("people")
+  );
+  const messageIdx = header.findIndex(
+    (h) => h.includes("message") || h.includes("wish") || h.includes("note")
+  );
 
   const rows: RsvpSheetRow[] = dataRows.map((cells) => {
     const attendingLabel =

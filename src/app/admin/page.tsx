@@ -14,13 +14,34 @@ type AdminData = {
   guestbook: GuestbookRow[];
 };
 
+type RsvpRow = {
+  timestamp: string;
+  name: string;
+  attending: boolean;
+  attendingLabel: string;
+  guestCount: number;
+  message: string;
+};
+
+type RsvpData = {
+  summary: {
+    totalResponses: number;
+    totalAttending: number;
+    totalNotAttending: number;
+    totalGuests: number;
+  };
+  rows: RsvpRow[];
+};
+
 const STORAGE_KEY = "azarius-admin-password";
 
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authorized, setAuthorized] = useState(false);
   const [data, setData] = useState<AdminData | null>(null);
+  const [rsvpData, setRsvpData] = useState<RsvpData | null>(null);
   const [error, setError] = useState("");
+  const [rsvpError, setRsvpError] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -36,6 +57,7 @@ export default function AdminPage() {
   async function loadData(pwd: string) {
     setLoading(true);
     setError("");
+    setRsvpError("");
 
     try {
       const response = await fetch("/api/admin", {
@@ -54,6 +76,17 @@ export default function AdminPage() {
       setData(json);
       setAuthorized(true);
       window.sessionStorage.setItem(STORAGE_KEY, pwd);
+
+      const rsvpResponse = await fetch("/api/admin/rsvps", {
+        headers: { "x-admin-password": pwd },
+      });
+      const rsvpBody = await rsvpResponse.json().catch(() => null);
+
+      if (!rsvpResponse.ok) {
+        setRsvpError(rsvpBody?.error || "Could not load RSVP spreadsheet data.");
+      } else {
+        setRsvpData(rsvpBody as RsvpData);
+      }
     } catch {
       setError("Could not reach the server.");
     } finally {
@@ -62,8 +95,10 @@ export default function AdminPage() {
   }
 
   async function moderate(id: string, action: "approve" | "reject") {
+    setError("");
+
     try {
-      await fetch("/api/admin/moderate", {
+      const response = await fetch("/api/admin/moderate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,6 +106,12 @@ export default function AdminPage() {
         },
         body: JSON.stringify({ id, action }),
       });
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        setError(body?.error || "Could not update that message.");
+        return;
+      }
 
       void loadData(password);
     } catch {
@@ -91,8 +132,8 @@ export default function AdminPage() {
           <h1 className="font-serif text-2xl text-[#F5EDE0]">Admin</h1>
 
           <p className="mt-2 text-sm text-white/60">
-            Enter the admin password to moderate the guestbook. RSVP totals
-            live in your Google Form&apos;s Responses tab.
+            Enter the admin password to view Google Forms RSVP responses and
+            manage guestbook messages.
           </p>
 
           <input
@@ -121,14 +162,82 @@ export default function AdminPage() {
   const approved = data?.guestbook.filter((row) => row.approved) ?? [];
 
   return (
-    <main className="min-h-screen bg-[#2B1810] px-6 py-16 text-white">
-      <div className="mx-auto max-w-3xl">
+    <main className="min-h-screen bg-[#2B1810] px-4 py-12 text-white sm:px-6 sm:py-16">
+      <div className="mx-auto max-w-5xl">
         <h1 className="font-serif text-3xl text-[#F5EDE0]">Niven&apos;s Birthday — Admin</h1>
 
         <p className="mt-2 text-sm text-white/50">
-          Looking for RSVP totals? Open your Google Form&apos;s Responses tab
-          — it has a live Yes/No breakdown and the full guest list.
+          RSVP responses are loaded from the linked Google Forms response sheet.
         </p>
+
+        <section className="mt-10">
+          <div className="flex flex-wrap items-center gap-3">
+            <h2 className="font-serif text-xl text-[#F5EDE0]">RSVP Responses</h2>
+            <button
+              onClick={() => void loadData(password)}
+              disabled={loading}
+              className="rounded-full border border-[#C9973B]/40 px-4 py-2 text-xs uppercase tracking-[0.12em] text-white/70 transition hover:border-[#C9973B] disabled:opacity-50"
+            >
+              {loading ? "Loading..." : "Refresh"}
+            </button>
+          </div>
+
+          {rsvpError && (
+            <p className="mt-3 rounded-lg border border-red-300/20 bg-red-300/10 px-4 py-3 text-sm text-red-200">
+              {rsvpError}
+            </p>
+          )}
+
+          {rsvpData && (
+            <>
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {[
+                  { label: "Responses", value: rsvpData.summary.totalResponses },
+                  { label: "Attending", value: rsvpData.summary.totalAttending },
+                  { label: "Declined", value: rsvpData.summary.totalNotAttending },
+                  { label: "Total Guests", value: rsvpData.summary.totalGuests },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-xl border border-[#C9973B]/20 bg-white/[0.04] p-4 text-center">
+                    <p className="font-serif text-2xl text-[#E8C87A]">{item.value}</p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-white/50">{item.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 overflow-x-auto rounded-xl border border-[#C9973B]/20">
+                <table className="min-w-full divide-y divide-white/10 text-left text-sm">
+                  <thead className="bg-white/[0.05] text-[10px] uppercase tracking-[0.12em] text-white/50">
+                    <tr>
+                      <th className="px-4 py-3">Submitted</th>
+                      <th className="px-4 py-3">Name</th>
+                      <th className="px-4 py-3">Response</th>
+                      <th className="px-4 py-3">Guests</th>
+                      <th className="px-4 py-3">Message</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/10">
+                    {rsvpData.rows.map((row, index) => (
+                      <tr key={`${row.timestamp}-${row.name}-${index}`} className="align-top">
+                        <td className="whitespace-nowrap px-4 py-3 text-white/60">{row.timestamp || "—"}</td>
+                        <td className="px-4 py-3 font-medium text-[#E8C87A]">{row.name || "(no name)"}</td>
+                        <td className="px-4 py-3">{row.attendingLabel || (row.attending ? "Attending" : "Not attending")}</td>
+                        <td className="px-4 py-3">{row.guestCount}</td>
+                        <td className="max-w-md whitespace-pre-wrap px-4 py-3 text-white/70">{row.message || "—"}</td>
+                      </tr>
+                    ))}
+                    {rsvpData.rows.length === 0 && (
+                      <tr><td colSpan={5} className="px-4 py-8 text-center text-white/50">No RSVP responses found.</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+        </section>
+
+        {error && (
+          <p className="mt-6 rounded-lg border border-red-300/20 bg-red-300/10 px-4 py-3 text-sm text-red-200">{error}</p>
+        )}
 
         {data && (
           <>

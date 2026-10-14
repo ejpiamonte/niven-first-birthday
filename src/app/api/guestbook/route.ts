@@ -1,6 +1,14 @@
 // src/app/api/guestbook/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import getSupabaseAdmin from "@/src/lib/supabase";
+import { fetchRsvpRows } from "@/src/lib/rsvpSheet";
+
+type GuestbookMessage = {
+  id: string;
+  name: string;
+  message: string;
+  sortTime: number;
+};
 
 // .slice() cuts by UTF-16 code unit, not by character — most emoji are
 // two code units, so a plain .slice(0, n) landing exactly mid-emoji
@@ -10,27 +18,69 @@ function truncate(value: string, maxLength: number): string {
   return Array.from(value).slice(0, maxLength).join("");
 }
 
-// Public: list live messages, newest last.
+// Public: show messages entered in the RSVP Sheet and saved guestbook rows.
+// The response intentionally contains only the author and message fields
+// (plus an opaque key for rendering); timestamps and RSVP details stay private.
 export async function GET() {
-  try {
-    const supabase = getSupabaseAdmin();
+  const [sheetResult, databaseResult] = await Promise.allSettled([
+    fetchRsvpRows(),
+    (async () => {
+      const supabase = getSupabaseAdmin();
+      const { data, error } = await supabase
+        .from("guestbook")
+        .select("id, name, message, approved, created_at")
+        .eq("approved", true)
+        .order("created_at", { ascending: true });
 
-    const { data, error } = await supabase
-      .from("guestbook")
-      .select("id, name, message, created_at")
-      .eq("approved", true)
-      .order("created_at", { ascending: true });
+      if (error) throw error;
+      return data ?? [];
+    })(),
+  ]);
 
-    if (error) {
-      console.error("Supabase guestbook select error:", error);
-      return NextResponse.json({ error: "Could not load messages." }, { status: 500 });
-    }
+  const messages: GuestbookMessage[] = [];
+  const warnings: string[] = [];
 
-    return NextResponse.json({ messages: data ?? [] });
-  } catch (error) {
-    console.error("Guestbook GET route error:", error);
-    return NextResponse.json({ error: "Could not load messages." }, { status: 500 });
+  if (sheetResult.status === "fulfilled") {
+    sheetResult.value.forEach((row, index) => {
+      if (!row.name || row.name === "(no name)" || !row.message) return;
+      messages.push({
+        id: `rsvp-${index}-${row.timestamp}`,
+        name: row.name,
+        message: row.message,
+        sortTime: Date.parse(row.timestamp) || 0,
+      });
+    });
+  } else {
+    console.error("Guestbook RSVP sheet fetch error:", sheetResult.reason);
+    warnings.push("RSVP messages could not be loaded.");
   }
+
+  if (databaseResult.status === "fulfilled") {
+    for (const row of databaseResult.value) {
+      messages.push({
+        id: row.id,
+        name: row.name,
+        message: row.message,
+        sortTime: Date.parse(row.created_at) || 0,
+      });
+    }
+  } else {
+    console.error("Supabase guestbook select error:", databaseResult.reason);
+    warnings.push("Saved guestbook messages could not be loaded.");
+  }
+
+  if (warnings.length === 2) {
+    return NextResponse.json(
+      { error: "Could not load guestbook messages." },
+      { status: 500 }
+    );
+  }
+
+  messages.sort((a, b) => a.sortTime - b.sortTime);
+  return NextResponse.json({
+    messages: messages.map(({ id, name, message }) => ({ id, name, message })),
+    ...(warnings.length > 0 ? { warning: warnings.join(" ") } : {}),
+  });
 }
 
 // Create a new guestbook entry. Goes live immediately — no moderation

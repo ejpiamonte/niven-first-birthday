@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Set up connected services and environment variables by following [SETUP.md](SETUP.md). Without those settings, the invitation renders, but RSVP counts, RSVP submissions, guestbook storage, and admin pages will not work fully.
+Open [http://localhost:3000](http://localhost:3000). Set up connected services and environment variables by following [setup and operations](docs/SETUP_AND_OPERATIONS.md). Without those settings, the invitation renders, but RSVP counts, RSVP submissions, guestbook storage, and admin pages will not work fully.
 
 ## Available commands
 
@@ -33,10 +33,10 @@ Open [http://localhost:3000](http://localhost:3000). Set up connected services a
 
 ## Admin pages
 
-- `/dashboard`: Google Sheets RSVP responses and totals.
-- `/admin`: guestbook administration.
+- `/dashboard`: Google Sheets RSVP responses and totals (RSVP-only view).
+- `/admin`: RSVP response sheet details and guestbook administration.
 
-Both pages use the `ADMIN_PASSWORD` environment variable. See [SETUP.md](SETUP.md) for service setup and security notes.
+Both pages use the `ADMIN_PASSWORD` environment variable. See [setup and operations](docs/SETUP_AND_OPERATIONS.md) for service setup and security notes.
 
 ## Event details
 
@@ -44,9 +44,18 @@ The invitation and calendar event currently use October 4, 2026 at 11:30 AM (Phi
 
 ## Deployment
 
-Deploy as a standard Next.js application (for example, on Vercel). Configure the required environment variables in the deployment environment before publishing. `NEXT_PUBLIC_*` values are embedded in browser code at build time; set them before building. See [SETUP.md](SETUP.md) for the full list.
+Deploy as a standard Next.js application (for example, on Vercel). Configure the required environment variables in the deployment environment before publishing. `NEXT_PUBLIC_*` values are embedded in browser code at build time; set them before building. See [setup and operations](docs/SETUP_AND_OPERATIONS.md) for the full list.
 
+## Project documentation
+
+- [Product requirements](docs/PRD.md)
+- [Technical design](docs/TRD.md)
+- [Application flows](docs/APP_FLOW.md)
+- [Design brief](docs/DESIGN_BRIEF.md)
+- [Database schema and data transfer notes](docs/DATABASE_SCHEMA.md)
+- [Implementation and maintenance plan](docs/IMPLEMENTATION_PLAN.md)
+- [Setup and operations](docs/SETUP_AND_OPERATIONS.md)
 
 ## Shared Supabase setup
 
-To share the existing Northstar project with LedgerLens and Niven, see [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md) and [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md). Inspect hosted metadata before applying [the additive SQL](supabase/shared/002_add_to_existing_northstar.sql). The empty bootstrap is for empty destinations only. No existing records or files are imported. SQL execution against Supabase remains pending.
+This repository includes reviewed SQL artifacts for adding the Niven guestbook alongside the existing Northstar and LedgerLens schemas. These scripts create schema objects; they do not transfer existing guestbook rows. See the database and setup docs, inspect the hosted project before applying [the additive SQL](supabase/shared/002_add_to_existing_northstar.sql), and use the empty bootstrap only for a genuinely empty destination. Confirm the current hosted state before running any SQL.

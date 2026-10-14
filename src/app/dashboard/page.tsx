@@ -38,10 +38,9 @@ export default function DashboardPage() {
   useEffect(() => {
     const saved = window.sessionStorage.getItem(STORAGE_KEY);
     if (saved) {
-      setPassword(saved);
+      queueMicrotask(() => setPassword(saved));
       void loadData(saved);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function loadData(pwd: string) {
