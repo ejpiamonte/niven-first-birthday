@@ -23,7 +23,7 @@ export default function Location() {
           <div className="relative aspect-[4/3] w-full">
             <iframe
               // Previous Home pin: https://maps.google.com/maps?q=14.743929,120.967935&z=18&output=embed
-              src="https://maps.app.goo.gl/gx3JXNQLbGroaD5KA"
+              src="https://maps.google.com/maps?q=14.743929,120.967935&z=18&output=embed"
               className="absolute inset-0 h-full w-full border-0"
               allowFullScreen
               loading="lazy"
