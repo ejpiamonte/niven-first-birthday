@@ -27,4 +27,4 @@ These are implementation review criteria, not a claim of WCAG conformance. Verif
 
 ## Asset conventions
 
-Gallery generation expects `public/images/gallery-1.jpeg` through `gallery-16.jpeg`. Keep the names and count when replacing those photos. Hero/closing photos and `public/og-image.jpg` are separate assets; the birthday track is `public/music/happy-birthday.wav`.
+“Little Moments” currently shows 16 decorative placeholders and does not load the gallery photos. The invitation uses `public/images/cartoon-hero.jpg` for the hero and `public/images/baby-closing3.jpg` for the closing portrait. `public/og-image.jpg` is the social preview image; the birthday track is `public/music/happy-birthday.wav`.

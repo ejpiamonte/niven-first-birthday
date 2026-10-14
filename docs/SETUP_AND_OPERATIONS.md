@@ -77,7 +77,7 @@ Set the deployed canonical URL for Open Graph metadata:
 NEXT_PUBLIC_SITE_URL=https://your-domain.example
 ```
 
-If omitted, metadata uses `http://localhost:3000`. Replace the gallery photos in `public/images/` while keeping the `gallery-1.jpeg` through `gallery-16.jpeg` filenames. Other invitation photos use `baby-hero.jpg`, `baby-closing.jpg`, and `baby-closing2.jpg`; the Open Graph image is `public/og-image.jpg`.
+If omitted, metadata uses `http://localhost:3000`. “Little Moments” currently displays 16 placeholders; its existing `gallery-1.jpeg` through `gallery-16.jpeg` files are not rendered. The invitation hero uses `public/images/cartoon-hero.jpg`, and the closing portrait uses `public/images/baby-closing3.jpg`. The Open Graph image is `public/og-image.jpg`.
 
 ## 6. Build and deploy
 

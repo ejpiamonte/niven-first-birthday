@@ -28,7 +28,7 @@ Open [http://localhost:3000](http://localhost:3000). Set up connected services a
 - `src/components/`: RSVP, guestbook, gallery, location, calendar, music, and other interface components.
 - `src/app/api/`: RSVP count, guestbook, calendar, and admin route handlers.
 - `src/lib/`: Google Forms submission, Google Sheets parsing, Supabase client, and sound helpers.
-- `public/images/`: invitation and gallery photos. The gallery expects `gallery-1.jpeg` through `gallery-16.jpeg`.
+- `public/images/`: invitation artwork and photos. “Little Moments” currently displays 16 placeholders; the gallery image files are not shown.
 - `public/music/`: birthday audio.
 
 ## Admin pages

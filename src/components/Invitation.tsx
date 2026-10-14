@@ -9,7 +9,6 @@ import Envelope from "./Envelope";
 import Guestbook from "./Guestbook";
 import Location from "./Location";
 import MusicPlayer from "./MusicPlayer";
-import PhotoLightbox from "./PhotoLightbox";
 import RSVP from "./RSVP";
 import ShareButton from "./ShareButton";
 import { playUnsealChime } from "../lib/sound";
@@ -24,13 +23,8 @@ const revealProps = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-// Replace /public/images/gallery-1.jpeg through gallery-16.jpeg with your
-// own photos (keep the same filenames/count) to swap the gallery.
 const GALLERY_COUNT = 16;
-const GALLERY_IMAGES = Array.from(
-  { length: GALLERY_COUNT },
-  (_, i) => `/images/gallery-${i + 1}.jpeg`
-);
+const GALLERY_PLACEHOLDERS = Array.from({ length: GALLERY_COUNT }, (_, i) => i + 1);
 
 // Scattered, independently-twinkling stars instead of a fixed grid of
 // positions. Random positions are generated in useEffect (client-only,
@@ -85,7 +79,6 @@ function StarField({ count = 14 }: { count?: number }) {
 
 export default function Invitation() {
   const [isOpened, setIsOpened] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [musicPlaying, setMusicPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -151,13 +144,6 @@ export default function Invitation() {
   return (
     <main className="min-h-screen overflow-hidden bg-[var(--coffee)]">
       <MusicPlayer playing={musicPlaying} onToggle={toggleMusic} />
-
-      <PhotoLightbox
-        images={GALLERY_IMAGES}
-        index={lightboxIndex}
-        onClose={() => setLightboxIndex(null)}
-        onNavigate={setLightboxIndex}
-      />
 
       <AnimatePresence mode="wait">
         {!isOpened ? (
@@ -256,13 +242,13 @@ export default function Invitation() {
               </div>
 
               <div className="relative z-10 w-full max-w-md text-center">
-                {/* Round photo — replace /public/images/baby-hero.jpg with
-                   your own photo (keep the same filename) to swap it. */}
+                {/* Round photo — replace /public/images/cartoon-hero.jpg with
+                   your own image (keep the same filename) to swap it. */}
                 <div className="lasso-border mx-auto mb-6 w-fit">
                   <div className="story-photo h-32 w-32 overflow-hidden rounded-full sm:h-36 sm:w-36">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="/images/baby-hero.jpg"
+                      src="/images/cartoon-hero.jpg"
                       alt="Niven"
                       className="h-full w-full rounded-full object-cover"
                     />
@@ -378,7 +364,7 @@ export default function Invitation() {
                   <div className="story-photo h-28 w-28 overflow-hidden rounded-full sm:h-32 sm:w-32">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="/images/baby-closing2.jpg"
+                      src="/images/baby-closing3.jpg"
                       alt="Niven smiling"
                       className="h-full w-full rounded-full object-cover"
                     />
@@ -411,28 +397,22 @@ export default function Invitation() {
                 </h2>
 
                 <p className="mx-auto mt-3 max-w-sm text-xs uppercase tracking-[0.2em] text-[var(--cream)]/40">
-                  Tap a photo to view it full-screen
+                  Photo placeholders
                 </p>
               </div>
 
               <div className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4">
-                {GALLERY_IMAGES.map((src, i) => (
-                  <motion.button
-                    key={src}
-                    type="button"
-                    onClick={() => setLightboxIndex(i)}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    aria-label={`Open photo ${i + 1} of ${GALLERY_IMAGES.length}`}
-                    className="story-photo aspect-square cursor-zoom-in overflow-hidden rounded-2xl"
+                {GALLERY_PLACEHOLDERS.map((slot) => (
+                  <div
+                    key={slot}
+                    aria-label={`Photo placeholder ${slot}`}
+                    className="story-photo flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-[var(--gold)]/20 bg-[var(--coffee-deep)]/70"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={src}
-                      alt={`Niven — photo ${i + 1}`}
-                      className="h-full w-full object-cover"
-                    />
-                  </motion.button>
+                    <span className="flex flex-col items-center gap-3 text-[var(--cream)]/35">
+                      <span aria-hidden="true" className="font-serif text-3xl text-[var(--gold)]/60">✦</span>
+                      <span className="text-[9px] uppercase tracking-[0.2em]">Photo {slot}</span>
+                    </span>
+                  </div>
                 ))}
               </div>
             </motion.section>
