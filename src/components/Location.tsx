@@ -1,6 +1,6 @@
 // src/components/Location.tsx
 // Coordinates embedded in the updated Home map pin.
-const HOME_COORDS = { lat: 14.742133658298407, lng: 120.96868209535202 };
+const HOME_COORDS = { lat: 14.742058176112435, lng: 120.96884662921556 };
 
 export default function Location() {
   return (
@@ -23,7 +23,7 @@ export default function Location() {
           <div className="relative aspect-[4/3] w-full">
             <iframe
               // Previous Home pin: https://maps.google.com/maps?q=14.743929,120.967935&z=18&output=embed
-              src="https://maps.google.com/maps?q=14.743929,120.967935&z=18&output=embed"
+              src={`https://maps.google.com/maps?q=${HOME_COORDS.lat},${HOME_COORDS.lng}&z=18&output=embed`}
               className="absolute inset-0 h-full w-full border-0"
               allowFullScreen
               loading="lazy"

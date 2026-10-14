@@ -23,8 +23,8 @@ export async function GET() {
     "DTEND:20261004T063000Z",
     "SUMMARY:Niven 1st Birthday",
     "LOCATION:Our Home",
-    "GEO:14.742133658298407;120.96868209535202",
-    "DESCRIPTION:Join us as we celebrate Niven's 1st birthday! Directions: https://www.google.com/maps/dir/?api=1&destination=14.742133658298407%2C120.96868209535202",
+    "GEO:14.742058176112435;120.96884662921556",
+    "DESCRIPTION:Join us as we celebrate Niven's 1st birthday! Directions: https://www.google.com/maps/dir/?api=1&destination=14.742058176112435%2C120.96884662921556",
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
